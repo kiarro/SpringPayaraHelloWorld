@@ -111,6 +111,11 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.8</version>
 		</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.13.2</version>
+        </dependency>
 
 
 		<dependency>
@@ -119,6 +124,13 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+
+		
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.3.4</version>
+        </dependency>
 	</dependencies>
 
 	<repositories>
