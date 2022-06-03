@@ -4,6 +4,10 @@ public class DragonCave {
     private float depth; //Поле не может быть null
     private double numberOfTreasures; //Значение поля должно быть больше 0
     
+    public DragonCave(){
+        
+    }
+
     public DragonCave(float depth, double numberOfTreasures) throws InvalidValueException {
         this.setDepth(depth);
         this.setNumberOfTreasures(numberOfTreasures);

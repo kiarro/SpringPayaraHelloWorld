@@ -4,6 +4,10 @@ public class Coordinates {
     private float x; //Поле не может быть null
     private float y;
 
+    public Coordinates(){
+        this(0, 0);
+    }
+
     public Coordinates(float x, float y){
         this.setX(x);
         this.setY(y);

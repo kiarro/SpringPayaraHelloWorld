@@ -2,7 +2,6 @@ package com.example.spring.core;
 
 import java.time.ZonedDateTime;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -21,7 +20,10 @@ public class Dragon {
     private DragonCharacter character; //Поле может быть null
     private DragonCave cave; //Поле не может быть null
 
-    @JsonCreator
+    public Dragon(){
+        this.creationDate = java.time.ZonedDateTime.now();
+    }
+
     public Dragon(String name, Coordinates coordinates, long age, long weight, DragonType type,
             DragonCharacter character, DragonCave cave) throws InvalidValueException {
         // fill with parameters
@@ -133,5 +135,13 @@ public class Dragon {
             e.printStackTrace();
             return "error";
         }
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setCreationDate(ZonedDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 }
