@@ -1,7 +1,6 @@
 package com.example.spring.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,10 +8,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Properties;
-import java.util.logging.Logger;
 
-import javax.annotation.Resource;
 import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

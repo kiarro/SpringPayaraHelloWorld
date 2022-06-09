@@ -1,6 +1,5 @@
 package com.example.spring.service;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.example.spring.core.Coordinates;

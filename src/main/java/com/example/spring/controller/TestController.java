@@ -1,6 +1,5 @@
 package com.example.spring.controller;
 
-import java.net.URI;
 import java.time.ZonedDateTime;
 
 import org.springframework.http.ResponseEntity;

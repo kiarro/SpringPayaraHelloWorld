@@ -1,7 +1,5 @@
 package com.example.spring.core.test;
 
-import com.example.spring.core.DragonType;
-
 public class Inner {
     private Long a;
     private String txt;
