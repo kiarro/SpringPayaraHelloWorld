@@ -7,18 +7,19 @@ CREATE TABLE caves (
 
 CREATE TABLE dragons (
     dragon_id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(30) NOT NULL,
+    name VARCHAR(100) NOT NULL,
     coordinate_x REAL NOT NULL,
     coordinate_y REAL NOT NULL,
     creation_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    creation_date_zone VARCHAR(50),
     age BIGINT NOT NULL,
     weight BIGINT NOT NULL,
-    type VARCHAR(15) NOT NULL,
-    character VARCHAR(15) NOT NULL,
+    type VARCHAR(30) NOT NULL,
+    character VARCHAR(30) NOT NULL,
     cave_id BIGINT NOT NULL,
     CONSTRAINT CHK_drid CHECK (dragon_id>0),
     CONSTRAINT CHK_name CHECK (NOT name=''),
     CONSTRAINT CHK_age CHECK (age>0),
     CONSTRAINT CHK_weight CHECK (weight>0),
-    CONSTRAINT FK_cave FOREIGN KEY (cave_id) REFERENCES caves(cave_id),
-)  
+    CONSTRAINT FK_cave FOREIGN KEY (cave_id) REFERENCES caves(cave_id)
+);  

@@ -5,11 +5,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.example.spring</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>dragons</artifactId>
 	<version>1.0</version>
 	<packaging>war</packaging>
 
-	<name>demo</name>
+	<name>dragons</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

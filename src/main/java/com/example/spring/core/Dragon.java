@@ -2,6 +2,7 @@ package com.example.spring.core;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,6 +14,7 @@ public class Dragon {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS z")
     private ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Long age; //Значение поля должно быть больше 0, Поле не может быть null
     private Long weight; //Значение поля должно быть больше 0, Поле не может быть null
@@ -21,7 +23,7 @@ public class Dragon {
     private DragonCave cave; //Поле не может быть null
 
     public Dragon(){
-        this.creationDate = java.time.ZonedDateTime.now();
+        // this.creationDate = java.time.ZonedDateTime.now();
     }
 
     public Dragon(String name, Coordinates coordinates, long age, long weight, DragonType type,

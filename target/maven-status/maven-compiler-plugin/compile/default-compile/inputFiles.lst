@@ -12,9 +12,11 @@ H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\s
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\core\test\Inner.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\controller\HomeController.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\service\DragonServiceImpl.java
+H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\service\DragonAutofill.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\service\DragonService.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\core\DragonFilter.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\config\MvcConfiguration.java
+H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\config\JacksonConfiguration.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\core\DragonType.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\dao\NotFoundException.java
 H:\Programs\SpringHelloWorld2\SpringPayaraHelloWorld\src\main\java\com\example\spring\core\InvalidValueException.java

@@ -1,12 +1,14 @@
 package com.example.spring.controller;
 
 import java.net.URI;
+import java.time.ZonedDateTime;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.spring.core.Coordinates;
@@ -15,10 +17,19 @@ import com.example.spring.core.DragonCave;
 import com.example.spring.core.DragonType;
 import com.example.spring.core.test.Obj1;
 import com.example.spring.core.test.Outer;
+import com.example.spring.service.DragonAutofill;
 
 @RestController
 @RequestMapping("/test")
 public class TestController {
+    @PostMapping("/randomDragons")
+    public Integer generateRandomDragons(@RequestParam(name = "amount", defaultValue = "1") Integer amount){
+        for (int i=0; i<amount; i++){
+            DragonAutofill.addRandomDragon();
+        }
+        return amount;
+    }
+
     @GetMapping
     public String getTestMessage(){
         return "This is test message from test";
@@ -53,6 +64,7 @@ public class TestController {
 
     @PostMapping("/dragon")
     public Dragon postDragon(@RequestBody Dragon t){
+        t.setCreationDate(ZonedDateTime.now());
         System.out.println(t);
         return t;
     }

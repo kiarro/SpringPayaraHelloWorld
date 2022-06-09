@@ -1,5 +1,6 @@
 package com.example.spring.service;
 
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.function.Predicate;
@@ -47,6 +48,7 @@ public class DragonServiceImpl implements DragonService {
     @Override
     public long add(Dragon dragon) {
         try {
+            dragon.setCreationDate(ZonedDateTime.now());
             long id = dragonDao.add(dragon);
             return id;
         } catch (DaoException e) {
