@@ -50,9 +50,9 @@ public class DaoImpl implements Dao {
     public Dragon get(long id) throws DaoException, InvalidValueException, NotFoundException {
         try {
             PreparedStatement psGet = connection.prepareStatement(
-                    "select * from" +
-                            " dragons join caves on dragons.cave_id = caves.cave_id" +
-                            " where dragon_id=?");
+                    "SELECT * FROM" +
+                            " dragons JOIN caves ON dragons.cave_id = caves.cave_id" +
+                            " WHERE dragon_id=?");
 
             psGet.setLong(1, id);
             ResultSet rs = psGet.executeQuery();
@@ -84,14 +84,14 @@ public class DaoImpl implements Dao {
     public long add(Dragon dragon) throws DaoException {
         try {
             PreparedStatement psAdd = connection.prepareStatement(
-                    "with ins1 as (" +
-                            " insert into caves(depth, number_of_treasures)" +
+                    "WITH ins1 AS (" +
+                            " INSERT INTO caves(depth, number_of_treasures)" +
                             " values (?, ?)" +
-                            " RETURNING cave_id as new_cave_id" +
+                            " RETURNING cave_id AS new_cave_id" +
                             " )" +
-                            " insert into dragons (name, coordinate_x, coordinate_y, creation_date, creation_date_zone, age, weight, type, character, cave_id)"+
-                            " select ?, ?, ?, ?, ?, ?, ?, ?, ?, new_cave_id from ins1" +
-                            " returning dragon_id");
+                            " INSERT INTO dragons (name, coordinate_x, coordinate_y, creation_date, creation_date_zone, age, weight, type, character, cave_id)"+
+                            " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, new_cave_id FROM ins1" +
+                            " RETURNING dragon_id");
             // cave params
             psAdd.setFloat(1, dragon.getCave().getDepth());
             psAdd.setDouble(2, dragon.getCave().getNumberOfTreasures());
@@ -119,16 +119,16 @@ public class DaoImpl implements Dao {
     public void update(long id, Dragon dragon) throws DaoException, NotFoundException {
         try {
             PreparedStatement psUpdate = connection.prepareStatement(
-                    "with upd1 as (" +
+                    "WITH upd1 AS (" +
                             " update dragons" +
-                            " set name=?, coordinate_x=?, coordinate_y=?," +
+                            " SET name=?, coordinate_x=?, coordinate_y=?," +
                             " age=?, weight=?, type=?, character=?" +
-                            " where dragon_id=?" +
-                            " returning cave_id as cave_id" +
+                            " WHERE dragon_id=?" +
+                            " RETURNING cave_id AS cave_id" +
                             " )" +
-                            " update caves" +
-                            " set depth=?, number_of_treasures=?" +
-                            " where cave_id in (SELECT cave_id from upd1)");
+                            " UPDATE caves" +
+                            " SET depth=?, number_of_treasures=?" +
+                            " WHERE cave_id IN (SELECT cave_id FROM upd1)");
 
             psUpdate.setString(1, dragon.getName());
             psUpdate.setFloat(2, dragon.getCoordinates().getX());
@@ -155,18 +155,18 @@ public class DaoImpl implements Dao {
         try {
             PreparedStatement psDelete = connection.prepareStatement(
                     
-                            " with del1 as ("+
-                                " delete from dragons"+
-                                " where dragon_id=?"+
-                                " returning *"+
+                            " WITH del1 AS ("+
+                                " DELETE from dragons"+
+                                " WHERE dragon_id=?"+
+                                " RETURNING *"+
                             " )"+
-                            " , del2 as ("+
-                                " delete from caves"+
-                                " where cave_id in (select cave_id from del1)"+
-                                " returning *"+
+                            " , del2 AS ("+
+                                " DELETE FROM caves"+
+                                " WHERE cave_id IN (select cave_id from del1)"+
+                                " RETURNING *"+
                             " )"+
-                            " select * from del1 join del2"+
-                            " on del1.cave_id = del2.cave_id"
+                            " SELECT * FROM del1 JOIN del2"+
+                            " ON del1.cave_id = del2.cave_id"
                             );
 
             psDelete.setLong(1, id);
@@ -202,8 +202,8 @@ public class DaoImpl implements Dao {
 
         try {
             PreparedStatement psGetAll = connection.prepareStatement(
-                            "select * from"+
-                            " dragons join caves on dragons.cave_id = caves.cave_id"
+                            "SELECT * FROM"+
+                            " dragons JOIN caves ON dragons.cave_id = caves.cave_id"
                             );
 
             ResultSet rs = psGetAll.executeQuery();

@@ -126,10 +126,10 @@ public class DragonAutofill {
     private static DragonCharacter[] characters = DragonCharacter.values();
 
     private static String getAdjName() {
-        return names_adj[r.nextInt(names_adj.length)];
+        return namesAdj[r.nextInt(namesAdj.length)];
     }
 
-    private static String[] names_adj = {
+    private static String[] namesAdj = {
             "Good",
             "Doomed",
             "Golden",
@@ -155,10 +155,10 @@ public class DragonAutofill {
     };
 
     private static String getTitleName() {
-        return names_title[r.nextInt(names_title.length)];
+        return namesTitle[r.nextInt(namesTitle.length)];
     }
 
-    private static String[] names_title = {
+    private static String[] namesTitle = {
             "Master",
             "Slayer",
             "Overlord",
@@ -183,10 +183,10 @@ public class DragonAutofill {
     };
 
     private static String getObjName() {
-        return names_obj[r.nextInt(names_obj.length)];
+        return namesObj[r.nextInt(namesObj.length)];
     }
 
-    private static String[] names_obj = {
+    private static String[] namesObj = {
             "Doom",
             "Gold",
             "Death",
@@ -210,19 +210,19 @@ public class DragonAutofill {
     };
 
     private static String getNameName() {
-        return name_beginning[r.nextInt(name_beginning.length)]
-                + name_middle[r.nextInt(name_middle.length)]
-                + name_end[r.nextInt(name_end.length)];
+        return nameBeginning[r.nextInt(nameBeginning.length)]
+                + nameMiddle[r.nextInt(nameMiddle.length)]
+                + nameEnd[r.nextInt(nameEnd.length)];
     }
 
-    private static String[] name_beginning = { "Kr", "Ca", "Ra", "Mrok", "Cru",
+    private static String[] nameBeginning = { "Kr", "Ca", "Ra", "Mrok", "Cru",
             "Ray", "Bre", "Zed", "Drak", "Mor", "Jag", "Mer", "Jar", "Mjol",
             "Zork", "Mad", "Cry", "Zur", "Creo", "Azak", "Azur", "Rei", "Cro",
             "Mar", "Luk" };
-    private static String[] name_middle = { "air", "ir", "mi", "sor", "mee", "clo",
+    private static String[] nameMiddle = { "air", "ir", "mi", "sor", "mee", "clo",
             "red", "cra", "ark", "arc", "miri", "lori", "cres", "mur", "zer",
             "marac", "zoir", "slamar", "salmar", "urak" };
-    private static String[] name_end = { "d", "ed", "ark", "arc", "es", "er", "der",
+    private static String[] nameEnd = { "d", "ed", "ark", "arc", "es", "er", "der",
             "tron", "med", "ure", "zur", "cred", "mur" };
 
 }
