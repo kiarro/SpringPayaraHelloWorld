@@ -22,7 +22,7 @@ import com.itmoclouddev.lab1.service.DragonService;
 import com.itmoclouddev.lab1.service.DragonServiceImpl;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/dragons")
 public class DragonController {
 
     private DragonService dragonService;

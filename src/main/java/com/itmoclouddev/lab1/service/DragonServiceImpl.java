@@ -3,6 +3,7 @@ package com.itmoclouddev.lab1.service;
 import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -112,24 +113,63 @@ public class DragonServiceImpl implements DragonService {
 
     @Override
     public Collection<Dragon> getFiltered(Collection<Dragon> collection, DragonFilter filter) {
-        Predicate<Dragon> predicate;
-
-        if (filter == null) {
-            predicate = item -> true;
-        } else {
-            predicate = item -> (filter.getAge() == null || item.getAge().equals(filter.getAge()))
-                    && (filter.getCharacter() == null || item.getCharacter().equals(filter.getCharacter()))
-                    && (filter.getCreationDate() == null || item.getCreationDate().equals(filter.getCreationDate()))
-                    && (filter.getId() == null || item.getId().equals(filter.getId()))
-                    && (filter.getName() == null || item.getName().equals(filter.getName()))
-                    && (filter.getType() == null || item.getType().equals(filter.getType()))
-                    && (filter.getWeight() == null || item.getWeight().equals(filter.getWeight()))
-                    && (filter.getCoordinateX() == null || item.getCoordinates().getX() == (filter.getCoordinateX()))
-                    && (filter.getCoordinateY() == null || item.getCoordinates().getY() == (filter.getCoordinateY()))
-                    && (filter.getCaveDepth() == null || item.getCave().getDepth() == (filter.getCaveDepth()))
-                    && (filter.getCaveNumberOfTreasures() == null
-                            || item.getCave().getNumberOfTreasures() == (filter.getCaveNumberOfTreasures()));
+        Predicate<Dragon> predicate = item -> true;
+        
+        Optional<DragonFilter> oFilter = Optional.ofNullable(filter);
+        if (!oFilter.isPresent()) {
+            return collection;
         }
+
+        if (oFilter.map(DragonFilter::getAge).isPresent()){
+            predicate.and(item -> item.getAge().equals(oFilter.map(DragonFilter::getAge).get()));
+        }
+        if (oFilter.map(DragonFilter::getCharacter).isPresent()){
+            predicate.and(item -> item.getCharacter().equals(oFilter.map(DragonFilter::getCharacter).get()));
+        }
+        if (oFilter.map(DragonFilter::getCreationDate).isPresent()){
+            predicate.and(item -> item.getCreationDate().equals(oFilter.map(DragonFilter::getCreationDate).get()));
+        }
+        if (oFilter.map(DragonFilter::getId).isPresent()){
+            predicate.and(item -> item.getId().equals(oFilter.map(DragonFilter::getId).get()));
+        }
+        if (oFilter.map(DragonFilter::getName).isPresent()){
+            predicate.and(item -> item.getName().equals(oFilter.map(DragonFilter::getName).get()));
+        }
+        if (oFilter.map(DragonFilter::getType).isPresent()){
+            predicate.and(item -> item.getType().equals(oFilter.map(DragonFilter::getType).get()));
+        }
+        if (oFilter.map(DragonFilter::getWeight).isPresent()){
+            predicate.and(item -> item.getWeight().equals(oFilter.map(DragonFilter::getWeight).get()));
+        }
+        // coords
+        if (oFilter.map(DragonFilter::getCoordinateX).isPresent()){
+            predicate.and(item -> item.getCoordinates().getX() == oFilter.map(DragonFilter::getCoordinateX).get());
+        }
+        if (oFilter.map(DragonFilter::getCoordinateY).isPresent()){
+            predicate.and(item -> item.getCoordinates().getY() == oFilter.map(DragonFilter::getCoordinateY).get());
+        }
+        // cave
+        if (oFilter.map(DragonFilter::getCaveDepth).isPresent()){
+            predicate.and(item -> item.getCave().getDepth() == oFilter.map(DragonFilter::getCaveDepth).get());
+        }
+        if (oFilter.map(DragonFilter::getCaveNumberOfTreasures).isPresent()){
+            predicate.and(item -> item.getCave().getNumberOfTreasures() == oFilter.map(DragonFilter::getCaveNumberOfTreasures).get());
+        }
+
+        
+        // predicate = item -> (filter.getAge() == null || item.getAge().equals(filter.getAge()))
+        //         && (filter.getCharacter() == null || item.getCharacter().equals(filter.getCharacter()))
+        //         && (filter.getCreationDate() == null || item.getCreationDate().equals(filter.getCreationDate()))
+        //         && (filter.getId() == null || item.getId().equals(filter.getId()))
+        //         && (filter.getName() == null || item.getName().equals(filter.getName()))
+        //         && (filter.getType() == null || item.getType().equals(filter.getType()))
+        //         && (filter.getWeight() == null || item.getWeight().equals(filter.getWeight()))
+        //         && (filter.getCoordinateX() == null || item.getCoordinates().getX() == (filter.getCoordinateX()))
+        //         && (filter.getCoordinateY() == null || item.getCoordinates().getY() == (filter.getCoordinateY()))
+        //         && (filter.getCaveDepth() == null || item.getCave().getDepth() == (filter.getCaveDepth()))
+        //         && (filter.getCaveNumberOfTreasures() == null
+        //                 || item.getCave().getNumberOfTreasures() == (filter.getCaveNumberOfTreasures()));
+        
 
         collection = collection.stream().filter(predicate).collect(Collectors.toList());
         return collection;
