@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.controller;
+package com.itmoclouddev.lab1.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

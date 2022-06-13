@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.model;
+package com.itmoclouddev.lab1.model;
 
 public enum DragonCharacter {
     CUNNING,

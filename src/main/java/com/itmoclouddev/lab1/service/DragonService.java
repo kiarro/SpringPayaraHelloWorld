@@ -1,9 +1,9 @@
-package com.itmo_cloud_dev.lab1.service;
+package com.itmoclouddev.lab1.service;
 
 import java.util.Collection;
 
-import com.itmo_cloud_dev.lab1.filter.DragonFilter;
-import com.itmo_cloud_dev.lab1.model.*;
+import com.itmoclouddev.lab1.filter.DragonFilter;
+import com.itmoclouddev.lab1.model.*;
 
 public interface DragonService {
     public Dragon get(long id);

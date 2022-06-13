@@ -1,9 +1,9 @@
-package com.itmo_cloud_dev.lab1.filter;
+package com.itmoclouddev.lab1.filter;
 
 import java.time.ZonedDateTime;
 
-import com.itmo_cloud_dev.lab1.model.DragonCharacter;
-import com.itmo_cloud_dev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.model.DragonCharacter;
+import com.itmoclouddev.lab1.model.DragonType;
 
 public class DragonFilter {
     public Long id = null;

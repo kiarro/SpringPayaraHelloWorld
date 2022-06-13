@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.controller;
+package com.itmoclouddev.lab1.controller;
 
 import java.net.URI;
 import java.util.Collection;
@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itmo_cloud_dev.lab1.filter.DragonFilter;
-import com.itmo_cloud_dev.lab1.model.Dragon;
-import com.itmo_cloud_dev.lab1.model.DragonCharacter;
-import com.itmo_cloud_dev.lab1.model.DragonType;
-import com.itmo_cloud_dev.lab1.service.DragonService;
-import com.itmo_cloud_dev.lab1.service.DragonServiceImpl;
+import com.itmoclouddev.lab1.filter.DragonFilter;
+import com.itmoclouddev.lab1.model.Dragon;
+import com.itmoclouddev.lab1.model.DragonCharacter;
+import com.itmoclouddev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.service.DragonService;
+import com.itmoclouddev.lab1.service.DragonServiceImpl;
 
 @RestController
-@RequestMapping("/dragons")
+@RequestMapping("/api")
 public class DragonController {
 
     private DragonService dragonService;

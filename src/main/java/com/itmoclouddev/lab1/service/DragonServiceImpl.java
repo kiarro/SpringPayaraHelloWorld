@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.service;
+package com.itmoclouddev.lab1.service;
 
 import java.time.ZonedDateTime;
 import java.util.Collection;
@@ -9,15 +9,15 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.itmo_cloud_dev.lab1.dao.Dao;
-import com.itmo_cloud_dev.lab1.dao.DaoException;
-import com.itmo_cloud_dev.lab1.dao.DaoImpl;
-import com.itmo_cloud_dev.lab1.dao.NotFoundException;
-import com.itmo_cloud_dev.lab1.exception.InvalidValueException;
-import com.itmo_cloud_dev.lab1.filter.DragonFilter;
-import com.itmo_cloud_dev.lab1.model.Dragon;
-import com.itmo_cloud_dev.lab1.model.DragonCharacter;
-import com.itmo_cloud_dev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.dao.Dao;
+import com.itmoclouddev.lab1.dao.DaoException;
+import com.itmoclouddev.lab1.dao.DaoImpl;
+import com.itmoclouddev.lab1.dao.NotFoundException;
+import com.itmoclouddev.lab1.exception.InvalidValueException;
+import com.itmoclouddev.lab1.filter.DragonFilter;
+import com.itmoclouddev.lab1.model.Dragon;
+import com.itmoclouddev.lab1.model.DragonCharacter;
+import com.itmoclouddev.lab1.model.DragonType;
 
 public class DragonServiceImpl implements DragonService {
 

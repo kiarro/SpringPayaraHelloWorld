@@ -1,14 +1,14 @@
-package com.itmo_cloud_dev.lab1.service;
+package com.itmoclouddev.lab1.service;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.itmo_cloud_dev.lab1.dao.Dao;
-import com.itmo_cloud_dev.lab1.dao.DaoImpl;
-import com.itmo_cloud_dev.lab1.model.Coordinates;
-import com.itmo_cloud_dev.lab1.model.Dragon;
-import com.itmo_cloud_dev.lab1.model.DragonCave;
-import com.itmo_cloud_dev.lab1.model.DragonCharacter;
-import com.itmo_cloud_dev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.dao.Dao;
+import com.itmoclouddev.lab1.dao.DaoImpl;
+import com.itmoclouddev.lab1.model.Coordinates;
+import com.itmoclouddev.lab1.model.Dragon;
+import com.itmoclouddev.lab1.model.DragonCave;
+import com.itmoclouddev.lab1.model.DragonCharacter;
+import com.itmoclouddev.lab1.model.DragonType;
 
 public class DragonAutofill {
     private static ThreadLocalRandom r = ThreadLocalRandom.current();

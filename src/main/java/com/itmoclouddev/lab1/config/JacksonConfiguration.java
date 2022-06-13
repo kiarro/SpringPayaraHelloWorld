@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.config;
+package com.itmoclouddev.lab1.config;
 
 import java.util.List;
 

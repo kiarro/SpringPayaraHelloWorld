@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.controller;
+package com.itmoclouddev.lab1.controller;
 
 import java.time.ZonedDateTime;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.itmo_cloud_dev.lab1.model.Coordinates;
-import com.itmo_cloud_dev.lab1.model.Dragon;
-import com.itmo_cloud_dev.lab1.model.DragonCave;
-import com.itmo_cloud_dev.lab1.model.DragonType;
-import com.itmo_cloud_dev.lab1.service.DragonAutofill;
+import com.itmoclouddev.lab1.model.Coordinates;
+import com.itmoclouddev.lab1.model.Dragon;
+import com.itmoclouddev.lab1.model.DragonCave;
+import com.itmoclouddev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.service.DragonAutofill;
 
 @RestController
 @RequestMapping("/test")

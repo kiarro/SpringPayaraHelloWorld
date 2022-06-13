@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.model;
+package com.itmoclouddev.lab1.model;
 
 import java.time.ZonedDateTime;
 
@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.itmo_cloud_dev.lab1.exception.InvalidValueException;
+import com.itmoclouddev.lab1.exception.InvalidValueException;
 
 
 public class Dragon {

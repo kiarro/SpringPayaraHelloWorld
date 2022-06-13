@@ -1,4 +1,4 @@
-package com.itmo_cloud_dev.lab1.dao;
+package com.itmoclouddev.lab1.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +13,12 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.itmo_cloud_dev.lab1.exception.InvalidValueException;
-import com.itmo_cloud_dev.lab1.model.Coordinates;
-import com.itmo_cloud_dev.lab1.model.Dragon;
-import com.itmo_cloud_dev.lab1.model.DragonCave;
-import com.itmo_cloud_dev.lab1.model.DragonCharacter;
-import com.itmo_cloud_dev.lab1.model.DragonType;
+import com.itmoclouddev.lab1.exception.InvalidValueException;
+import com.itmoclouddev.lab1.model.Coordinates;
+import com.itmoclouddev.lab1.model.Dragon;
+import com.itmoclouddev.lab1.model.DragonCave;
+import com.itmoclouddev.lab1.model.DragonCharacter;
+import com.itmoclouddev.lab1.model.DragonType;
 
 public class DaoImpl implements Dao {
 

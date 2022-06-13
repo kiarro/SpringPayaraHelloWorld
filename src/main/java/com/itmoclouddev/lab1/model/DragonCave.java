@@ -1,6 +1,6 @@
-package com.itmo_cloud_dev.lab1.model;
+package com.itmoclouddev.lab1.model;
 
-import com.itmo_cloud_dev.lab1.exception.InvalidValueException;
+import com.itmoclouddev.lab1.exception.InvalidValueException;
 
 public class DragonCave {
     private float depth; //Поле не может быть null
