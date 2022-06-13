@@ -14,8 +14,6 @@ import com.example.spring.core.Coordinates;
 import com.example.spring.core.Dragon;
 import com.example.spring.core.DragonCave;
 import com.example.spring.core.DragonType;
-import com.example.spring.core.test.Obj1;
-import com.example.spring.core.test.Outer;
 import com.example.spring.service.DragonAutofill;
 
 @RestController
@@ -37,16 +35,6 @@ public class TestController {
     public ResponseEntity<Coordinates> postCoord(@RequestBody Coordinates coord){
         System.out.println(coord);
         return ResponseEntity.ok(coord);
-    }
-    @PostMapping("/complex")
-    public Outer postComplex(@RequestBody Outer outer){
-        System.out.println(outer);
-        return outer;
-    }
-    @PostMapping("/obj1")
-    public Obj1 postObj1(@RequestBody Obj1 obj){
-        System.out.println(obj);
-        return obj;
     }
 
     @PostMapping("/enum")

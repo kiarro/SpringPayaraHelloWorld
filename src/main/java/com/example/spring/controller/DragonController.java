@@ -3,13 +3,12 @@ package com.example.spring.controller;
 import java.net.URI;
 import java.util.Collection;
 
-import javax.inject.Inject;
-
 import com.example.spring.core.Dragon;
 import com.example.spring.core.DragonCharacter;
 import com.example.spring.core.DragonFilter;
 import com.example.spring.core.DragonType;
 import com.example.spring.service.DragonService;
+import com.example.spring.service.DragonServiceImpl;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,8 +25,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/dragons")
 public class DragonController {
 
-    @Inject
     private DragonService dragonService;
+
+    public DragonController() {
+        super();
+
+        dragonService = new DragonServiceImpl();
+    }
 
     @GetMapping
     public Collection<Dragon> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,

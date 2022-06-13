@@ -9,7 +9,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -21,7 +20,6 @@ import com.example.spring.core.DragonCharacter;
 import com.example.spring.core.DragonType;
 import com.example.spring.core.InvalidValueException;
 
-@Named
 public class DaoImpl implements Dao {
 
     private Connection connection = null;

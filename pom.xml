@@ -45,14 +45,6 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
-
 		<!-- CGLib for @Configuration -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -61,48 +53,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
 		<!-- Servlet Spec -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<!-- Thymeleaf -->
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring5</artifactId>
-			<version>3.0.11.RELEASE</version>
-		</dependency>
-
-		<!-- Logging -->
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-			<scope>runtime</scope>
-		</dependency>
-
-		<!-- JSR-330 for @Inject -->
-		<dependency>
-			<groupId>javax.inject</groupId>
-			<artifactId>javax.inject</artifactId>
-			<version>1</version>
-		</dependency>
-
-		<!-- Commons Upload for File upload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.4</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.6</version>
 		</dependency>
 
 		<!-- Jackson JSON Mapper -->
@@ -116,15 +72,6 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.13.2</version>
         </dependency>
-
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-
 		
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -132,14 +79,6 @@
             <version>42.3.4</version>
         </dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>springsource-milestones</id>
-			<name>SpringSource Milestones Proxy</name>
-			<url>https://oss.sonatype.org/content/repositories/springsource-milestones</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<finalName>${project.name}</finalName>

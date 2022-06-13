@@ -6,9 +6,6 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import com.example.spring.core.Dragon;
 import com.example.spring.core.DragonCharacter;
 import com.example.spring.core.DragonFilter;
@@ -16,16 +13,25 @@ import com.example.spring.core.DragonType;
 import com.example.spring.core.InvalidValueException;
 import com.example.spring.dao.Dao;
 import com.example.spring.dao.DaoException;
+import com.example.spring.dao.DaoImpl;
 import com.example.spring.dao.NotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-@Named
 public class DragonServiceImpl implements DragonService {
 
-    @Inject
     private Dao dragonDao;
+
+    public DragonServiceImpl() {
+        try {
+            this.dragonDao = new DaoImpl();
+        } catch (DaoException e) {
+            e.printStackTrace();
+
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, String.format("Error in dao creating:\n", e.getMessage()));
+        }
+    }
 
     @Override
     public Dragon get(long id) {
