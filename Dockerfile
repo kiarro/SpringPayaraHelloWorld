@@ -1,2 +1,2 @@
 FROM airhacks/glassfish
-COPY ./target/dragon.war ${DEPLOYMENT_DIR}
+COPY ./target/dragons.war ${DEPLOYMENT_DIR}
