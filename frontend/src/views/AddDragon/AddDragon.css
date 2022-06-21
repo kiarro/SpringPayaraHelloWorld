@@ -1,0 +1,23 @@
+form {
+    width: 311px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.AddButton
+{
+    background-color: #6b63b5;
+    color: #fff;
+    margin-top: 20px!important;
+    height: 48px;
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: 0px;
+    border-radius:25px;
+}
+
+.InputConteiner
+{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
