@@ -16,13 +16,13 @@ public class DragonAutofill {
     public static void addRandomDragon() {
         try {
             Dao dao = new DaoImpl();
-            dao.add(new Dragon(
+            dao.addDragonAndCave(new Dragon(
                     generateName(),
                     new Coordinates((float)r.nextDouble(-100, 100), (float)r.nextDouble(-100, 100)),
                     r.nextLong(1, 100000), r.nextLong(1, 100000),
                     types[r.nextInt(types.length)],
                     characters[r.nextInt(characters.length)],
-                    new DragonCave((float)r.nextDouble(1, 10000), r.nextDouble(1, 1000000)))
+                    new DragonCave((float)r.nextDouble(1, 10000), r.nextDouble(1, 1000000)), 1l)
             );
         } catch (Exception e) {
             e.printStackTrace();

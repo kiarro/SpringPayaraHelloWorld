@@ -17,7 +17,14 @@ public class DragonFilter {
     public DragonCharacter character = null;
     public Float caveDepth = null;
     public Double caveNumberOfTreasures = null;
+    public Long caveId = null;
     
+    public Long getCaveId() {
+        return caveId;
+    }
+    public void setCaveId(Long caveId) {
+        this.caveId = caveId;
+    }
     public Long getId() {
         return id;
     }

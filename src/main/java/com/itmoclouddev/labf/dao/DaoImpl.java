@@ -35,7 +35,7 @@ public class DaoImpl implements Dao {
 
             // Logger log = Logger.getLogger(DaoImpl.class.getName());
             // log.info("--------\n----------\n------------\n\n" + (ds == null)
-            //         + "\n\n--------------\n------------\n-----------\n---------");
+            // + "\n\n--------------\n------------\n-----------\n---------");
 
         } catch (SQLException e) {
             throw new DaoException("Error in establishing database connection", e);
@@ -47,7 +47,7 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public Dragon get(long id) throws DaoException, InvalidValueException, NotFoundException {
+    public Dragon getDragonAndCave(long id) throws DaoException, InvalidValueException, NotFoundException {
         try {
             PreparedStatement psGet = connection.prepareStatement(
                     "SELECT * FROM" +
@@ -71,7 +71,8 @@ public class DaoImpl implements Dao {
                         DragonCharacter.valueOf(rs.getString("character")),
                         new DragonCave(
                                 rs.getFloat("depth"),
-                                rs.getDouble("number_of_treasures")));
+                                rs.getDouble("number_of_treasures")),
+                        rs.getLong("dragons.cave_id"));
             } else {
                 throw new NotFoundException(String.format("Dragon with id=%d not found", id));
             }
@@ -81,7 +82,7 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public long add(Dragon dragon) throws DaoException {
+    public long addDragonAndCave(Dragon dragon) throws DaoException {
         try {
             PreparedStatement psAdd = connection.prepareStatement(
                     "WITH ins1 AS (" +
@@ -89,7 +90,8 @@ public class DaoImpl implements Dao {
                             " values (?, ?)" +
                             " RETURNING cave_id AS new_cave_id" +
                             " )" +
-                            " INSERT INTO dragons (name, coordinate_x, coordinate_y, creation_date, creation_date_zone, age, weight, type, character, cave_id)"+
+                            " INSERT INTO dragons (name, coordinate_x, coordinate_y, creation_date, creation_date_zone, age, weight, type, character, cave_id)"
+                            +
                             " SELECT ?, ?, ?, ?, ?, ?, ?, ?, ?, new_cave_id FROM ins1" +
                             " RETURNING dragon_id");
             // cave params
@@ -116,7 +118,7 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public void update(long id, Dragon dragon) throws DaoException, NotFoundException {
+    public void updateDragonWithCave(long id, Dragon dragon) throws DaoException, NotFoundException {
         try {
             PreparedStatement psUpdate = connection.prepareStatement(
                     "WITH upd1 AS (" +
@@ -151,30 +153,29 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public Dragon delete(long id) throws DaoException, InvalidValueException, NotFoundException {
+    public Dragon deleteDragonAndCave(long id) throws DaoException, InvalidValueException, NotFoundException {
         try {
             PreparedStatement psDelete = connection.prepareStatement(
-                    
-                            " WITH del1 AS ("+
-                                " DELETE from dragons"+
-                                " WHERE dragon_id=?"+
-                                " RETURNING *"+
-                            " )"+
-                            " , del2 AS ("+
-                                " DELETE FROM caves"+
-                                " WHERE cave_id IN (select cave_id from del1)"+
-                                " RETURNING *"+
-                            " )"+
-                            " SELECT * FROM del1 JOIN del2"+
-                            " ON del1.cave_id = del2.cave_id"
-                            );
+
+                    " WITH del1 AS (" +
+                            " DELETE from dragons" +
+                            " WHERE dragon_id=?" +
+                            " RETURNING *" +
+                            " )" +
+                            " , del2 AS (" +
+                            " DELETE FROM caves" +
+                            " WHERE cave_id IN (select cave_id from del1)" +
+                            " RETURNING *" +
+                            " )" +
+                            " SELECT * FROM del1 JOIN del2" +
+                            " ON del1.cave_id = del2.cave_id");
 
             psDelete.setLong(1, id);
 
             ResultSet rs = psDelete.executeQuery();
 
             if (!rs.next()) {
-                throw new NotFoundException(String.format("Dragon with id=%d not found",id));
+                throw new NotFoundException(String.format("Dragon with id=%d not found", id));
             }
 
             return new Dragon(
@@ -190,21 +191,21 @@ public class DaoImpl implements Dao {
                     DragonCharacter.valueOf(rs.getString("character")),
                     new DragonCave(
                             rs.getFloat("depth"),
-                            rs.getDouble("number_of_treasures")));
+                            rs.getDouble("number_of_treasures")),
+                    rs.getLong("del1.cave_id"));
         } catch (SQLException e) {
             throw new DaoException("Error in database", e);
         }
     }
 
     @Override
-    public Collection<Dragon> getAll() throws DaoException, InvalidValueException {
+    public Collection<Dragon> getAllDragonsAndCaves() throws DaoException, InvalidValueException {
         ArrayList<Dragon> collection = new ArrayList<Dragon>();
 
         try {
             PreparedStatement psGetAll = connection.prepareStatement(
-                            "SELECT * FROM"+
-                            " dragons JOIN caves ON dragons.cave_id = caves.cave_id"
-                            );
+                    "SELECT * FROM" +
+                            " dragons JOIN caves ON dragons.cave_id = caves.cave_id");
 
             ResultSet rs = psGetAll.executeQuery();
             while (rs.next()) {
@@ -221,7 +222,8 @@ public class DaoImpl implements Dao {
                                 DragonCharacter.valueOf(rs.getString("character")),
                                 new DragonCave(
                                         rs.getFloat("depth"),
-                                        rs.getDouble("number_of_treasures"))));
+                                        rs.getDouble("number_of_treasures")),
+                                rs.getLong("dragons.cave_id")));
             }
 
             return collection;
@@ -231,21 +233,290 @@ public class DaoImpl implements Dao {
     }
 
     @Override
-    public Collection<Dragon> getFiltered(Dragon filter) {
-        // TODO Auto-generated method stub
-        return null;
+    public Dragon getDragon(long id) throws DaoException, InvalidValueException, NotFoundException {
+        try {
+            PreparedStatement psGet = connection.prepareStatement(
+                    "SELECT * FROM" +
+                            " dragons " +
+                            " WHERE dragon_id=?");
+
+            psGet.setLong(1, id);
+            ResultSet rs = psGet.executeQuery();
+
+            if (rs.next()) {
+                return new Dragon(
+                        rs.getLong("dragon_id"),
+                        rs.getString("name"),
+                        new Coordinates(rs.getFloat("coordinate_x"),
+                                rs.getFloat("coordinate_y")),
+                        rs.getObject("creation_date", OffsetDateTime.class).toZonedDateTime()
+                                .withZoneSameInstant(ZoneId.of(rs.getString("creation_date_zone"))),
+                        rs.getLong("age"),
+                        rs.getLong("weight"),
+                        DragonType.valueOf(rs.getString("type")),
+                        DragonCharacter.valueOf(rs.getString("character")),
+                        null,
+                        rs.getLong("dragons.cave_id"));
+            } else {
+                throw new NotFoundException(String.format("Dragon with id=%d not found", id));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
     }
 
     @Override
-    public long countTypeLessThan(DragonType type) {
-        // TODO Auto-generated method stub
-        return 0;
+    public long addDragon(Dragon dragon) throws DaoException {
+        try {
+            PreparedStatement psAdd = connection.prepareStatement(
+                    " INSERT INTO dragons (name, coordinate_x, coordinate_y, creation_date, creation_date_zone, age, weight, type, character, cave_id)" +
+                            " VALUES ?, ?, ?, ?, ?, ?, ?, ?, ?, ?" +
+                            " RETURNING dragon_id");
+            // dragon params
+            psAdd.setString(1, dragon.getName());
+            psAdd.setFloat(2, dragon.getCoordinates().getX());
+            psAdd.setFloat(3, dragon.getCoordinates().getY());
+            psAdd.setObject(4, dragon.getCreationDate().toOffsetDateTime());
+            psAdd.setString(5, dragon.getCreationDate().getZone().getId());
+            psAdd.setLong(6, dragon.getAge());
+            psAdd.setLong(7, dragon.getWeight());
+            psAdd.setString(8, dragon.getType().name());
+            psAdd.setString(9, dragon.getCharacter().name());
+
+            // execute
+            ResultSet rs = psAdd.executeQuery();
+            rs.next();
+            return rs.getLong("dragon_id");
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
     }
 
     @Override
-    public long countCharacterMoreThan(DragonCharacter character) {
-        // TODO Auto-generated method stub
-        return 0;
+    public void updateDragon(long id, Dragon dragon) throws DaoException, NotFoundException {
+        try {
+            PreparedStatement psUpdate = connection.prepareStatement(
+                    " update dragons" +
+                            " SET name=?, coordinate_x=?, coordinate_y=?," +
+                            " age=?, weight=?, type=?, character=?, cave_id=?" +
+                            " WHERE dragon_id=?" +
+                            " RETURNING cave_id AS cave_id");                            
+
+            psUpdate.setString(1, dragon.getName());
+            psUpdate.setFloat(2, dragon.getCoordinates().getX());
+            psUpdate.setFloat(3, dragon.getCoordinates().getY());
+            psUpdate.setLong(4, dragon.getAge());
+            psUpdate.setLong(5, dragon.getWeight());
+            psUpdate.setString(6, dragon.getType().name());
+            psUpdate.setString(7, dragon.getCharacter().name());
+            psUpdate.setLong(8, dragon.getDragonCaveId());
+            psUpdate.setLong(8, id);
+
+            int changedRows = psUpdate.executeUpdate();
+            if (changedRows == 0) {
+                throw new NotFoundException(String.format("Dragon with id=%d not found", id));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
     }
+
+    @Override
+    public Dragon deleteDragon(long id) throws DaoException, InvalidValueException, NotFoundException {
+        try {
+            PreparedStatement psDelete = connection.prepareStatement(
+
+                    " DELETE from dragons" +
+                            " WHERE dragon_id=?" +
+                            " RETURNING *" );
+
+            psDelete.setLong(1, id);
+
+            ResultSet rs = psDelete.executeQuery();
+
+            if (!rs.next()) {
+                throw new NotFoundException(String.format("Dragon with id=%d not found", id));
+            }
+
+            return new Dragon(
+                    rs.getLong("dragon_id"),
+                    rs.getString("name"),
+                    new Coordinates(rs.getFloat("coordinate_x"),
+                            rs.getFloat("coordinate_y")),
+                    rs.getObject("creation_date", OffsetDateTime.class).toZonedDateTime()
+                            .withZoneSameInstant(ZoneId.of(rs.getString("creation_date_zone"))),
+                    rs.getLong("age"),
+                    rs.getLong("weight"),
+                    DragonType.valueOf(rs.getString("type")),
+                    DragonCharacter.valueOf(rs.getString("character")),
+                    null,
+                    rs.getLong("cave_id"));
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    @Override
+    public Collection<Dragon> getAllDragons() throws DaoException, InvalidValueException {
+        ArrayList<Dragon> collection = new ArrayList<Dragon>();
+
+        try {
+            PreparedStatement psGetAll = connection.prepareStatement(
+                    "SELECT * FROM" +
+                            " dragons");
+
+            ResultSet rs = psGetAll.executeQuery();
+            while (rs.next()) {
+                collection.add(
+                        new Dragon(rs.getLong("dragon_id"),
+                                rs.getString("name"),
+                                new Coordinates(rs.getFloat("coordinate_x"),
+                                        rs.getFloat("coordinate_y")),
+                                rs.getObject("creation_date", OffsetDateTime.class).toZonedDateTime()
+                                        .withZoneSameInstant(ZoneId.of(rs.getString("creation_date_zone"))),
+                                rs.getLong("age"),
+                                rs.getLong("weight"),
+                                DragonType.valueOf(rs.getString("type")),
+                                DragonCharacter.valueOf(rs.getString("character")),
+                                null,
+                                rs.getLong("dragons.cave_id")));
+            }
+
+            return collection;
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    @Override
+    public DragonCave getCave(long id) throws DaoException, InvalidValueException, NotFoundException {
+        try {
+            PreparedStatement psGet = connection.prepareStatement(
+                    "SELECT * FROM" +
+                            " caves" +
+                            " WHERE cave_id=?");
+
+            psGet.setLong(1, id);
+            ResultSet rs = psGet.executeQuery();
+
+            if (rs.next()) {
+                return new DragonCave(
+                        rs.getLong("cave_id"),
+                        rs.getFloat("depth"),
+                        rs.getDouble("number_of_treasures"));
+            } else {
+                throw new NotFoundException(String.format("Cave with id=%d not found", id));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    @Override
+    public long addCave(DragonCave cave) throws DaoException {
+        try {
+            PreparedStatement psAdd = connection.prepareStatement(
+                    " INSERT INTO caves(depth, number_of_treasures)" +
+                            " VALUES (?, ?)" +
+                            " RETURNING cave_id");
+            // cave params
+            psAdd.setFloat(1, cave.getDepth());
+            psAdd.setDouble(2, cave.getNumberOfTreasures());
+            
+            // execute
+            ResultSet rs = psAdd.executeQuery();
+            rs.next();
+            return rs.getLong("cave_id");
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    @Override
+    public void updateCave(long id, DragonCave cave) throws DaoException, NotFoundException {
+        try {
+            PreparedStatement psUpdate = connection.prepareStatement(
+                    " UPDATE caves" +
+                            " SET depth=?, number_of_treasures=?" +
+                            " WHERE cave_id = ?");
+
+            psUpdate.setFloat(1, cave.getDepth());
+            psUpdate.setDouble(2, cave.getNumberOfTreasures());
+            psUpdate.setLong(3, id);
+
+            int changedRows = psUpdate.executeUpdate();
+            if (changedRows == 0) {
+                throw new NotFoundException(String.format("Cave with id=%d not found", id));
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+
+    }
+
+    @Override
+    public DragonCave deleteCave(long id) throws DaoException, InvalidValueException, NotFoundException {
+        try {
+            PreparedStatement psDelete = connection.prepareStatement(
+                    " DELETE FROM caves" +
+                            " WHERE cave_id = ? " +
+                            " RETURNING *" );
+
+            psDelete.setLong(1, id);
+
+            ResultSet rs = psDelete.executeQuery();
+
+            if (!rs.next()) {
+                throw new NotFoundException(String.format("Cave with id=%d not found", id));
+            }
+
+            return new DragonCave(
+                        rs.getLong("cave_id"),
+                        rs.getFloat("depth"),
+                        rs.getDouble("number_of_treasures"));
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    @Override
+    public Collection<DragonCave> getAllCaves() throws DaoException, InvalidValueException {
+        ArrayList<DragonCave> collection = new ArrayList<DragonCave>();
+
+        try {
+            PreparedStatement psGetAll = connection.prepareStatement(
+                    "SELECT * FROM" +
+                            " caves");
+
+            ResultSet rs = psGetAll.executeQuery();
+            while (rs.next()) {
+                collection.add(new DragonCave(
+                                    rs.getFloat("depth"),
+                                    rs.getDouble("number_of_treasures"))
+                        );
+            }
+            return collection;
+        } catch (SQLException e) {
+            throw new DaoException("Error in database", e);
+        }
+    }
+
+    // @Override
+    // public Collection<Dragon> getDragonsAndCavesFiltered(Dragon filter) {
+    // // TODO Auto-generated method stub
+    // return null;
+    // }
+
+    // @Override
+    // public long countTypeLessThan(DragonType type) {
+    // // TODO Auto-generated method stub
+    // return 0;
+    // }
+
+    // @Override
+    // public long countCharacterMoreThan(DragonCharacter character) {
+    // // TODO Auto-generated method stub
+    // return 0;
+    // }
 
 }

@@ -20,11 +20,11 @@ import com.itmoclouddev.labf.model.Dragon;
 import com.itmoclouddev.labf.model.DragonCharacter;
 import com.itmoclouddev.labf.model.DragonType;
 
-public class DragonServiceImpl implements DragonService {
+public class DragonCaveServiceImpl implements DragonCaveService {
 
     private Dao dragonDao;
 
-    public DragonServiceImpl() {
+    public DragonCaveServiceImpl() {
         try {
             this.dragonDao = new DaoImpl();
         } catch (DaoException e) {
@@ -37,7 +37,7 @@ public class DragonServiceImpl implements DragonService {
     @Override
     public Dragon get(long id) {
         try {
-            Dragon res = dragonDao.getDragon(id);
+            Dragon res = dragonDao.getDragonAndCave(id);
             return res;
         } catch (DaoException e) {
             e.printStackTrace();
@@ -56,7 +56,7 @@ public class DragonServiceImpl implements DragonService {
     public long add(Dragon dragon) {
         try {
             dragon.setCreationDate(ZonedDateTime.now());
-            long id = dragonDao.addDragon(dragon);
+            long id = dragonDao.addDragonAndCave(dragon);
             return id;
         } catch (DaoException e) {
             e.printStackTrace();
@@ -68,7 +68,7 @@ public class DragonServiceImpl implements DragonService {
     @Override
     public void update(long id, Dragon dragon) {
         try {
-            dragonDao.updateDragon(id, dragon);
+            dragonDao.updateDragonWithCave(id, dragon);
         } catch (DaoException e) {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
@@ -81,7 +81,7 @@ public class DragonServiceImpl implements DragonService {
     @Override
     public Dragon delete(long id) {
         try {
-            Dragon res = dragonDao.deleteDragon(id);
+            Dragon res = dragonDao.deleteDragonAndCave(id);
             return res;
         } catch (DaoException e) {
             e.printStackTrace();
@@ -99,7 +99,7 @@ public class DragonServiceImpl implements DragonService {
     @Override
     public Collection<Dragon> getAll() {
         try {
-            Collection<Dragon> res = dragonDao.getAllDragons();
+            Collection<Dragon> res = dragonDao.getAllDragonsAndCaves();
             return res;
         } catch (DaoException e) {
             e.printStackTrace();
@@ -147,6 +147,16 @@ public class DragonServiceImpl implements DragonService {
         }
         if (oFilter.map(DragonFilter::getCoordinateY).isPresent()){
             predicate.and(item -> item.getCoordinates().getY() == oFilter.map(DragonFilter::getCoordinateY).get());
+        }
+        // cave
+        if (oFilter.map(DragonFilter::getCaveDepth).isPresent()){
+            predicate.and(item -> item.getCave().getDepth() == oFilter.map(DragonFilter::getCaveDepth).get());
+        }
+        if (oFilter.map(DragonFilter::getCaveNumberOfTreasures).isPresent()){
+            predicate.and(item -> item.getCave().getNumberOfTreasures() == oFilter.map(DragonFilter::getCaveNumberOfTreasures).get());
+        }
+        if (oFilter.map(DragonFilter::getCaveId).isPresent()){
+            predicate.and(item -> item.getCave().getCaveId() == oFilter.map(DragonFilter::getCaveId).get());
         }
 
         collection = collection.stream().filter(predicate).collect(Collectors.toList());
@@ -214,6 +224,18 @@ public class DragonServiceImpl implements DragonService {
                 }
                 case "character": {
                     comparator = comparator.thenComparing(Dragon::getCharacter, (o1, o2) -> o1.compareTo(o2)*sign);
+                    break;
+                }
+                case "cavedepth": {
+                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getDepth()-o2.getDepth())*sign);
+                    break;
+                }
+                case "cavenumberoftreasures": {
+                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getNumberOfTreasures()-o2.getNumberOfTreasures())*sign);
+                    break;
+                }
+                case "caveid": {
+                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getCaveId()-o2.getCaveId())*sign);
                     break;
                 }
             }

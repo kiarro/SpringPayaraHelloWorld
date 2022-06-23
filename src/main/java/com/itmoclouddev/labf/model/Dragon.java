@@ -21,6 +21,7 @@ public class Dragon {
     private Long weight; //Значение поля должно быть больше 0, Поле не может быть null
     private DragonType type; //Поле может быть null
     private DragonCharacter character; //Поле может быть null
+    private Long dragonCaveId;
     private DragonCave cave; //Поле не может быть null
 
     public Dragon(){
@@ -28,7 +29,7 @@ public class Dragon {
     }
 
     public Dragon(String name, Coordinates coordinates, long age, long weight, DragonType type,
-            DragonCharacter character, DragonCave cave) throws InvalidValueException {
+            DragonCharacter character, DragonCave cave, Long dragonCaveId) throws InvalidValueException {
         // fill with parameters
         this.setName(name);
         this.setCoordinates(coordinates);
@@ -37,18 +38,27 @@ public class Dragon {
         this.setType(type);
         this.setCharacter(character);
         this.setCave(cave);
+        this.setDragonCaveId(dragonCaveId);
         
         // fill auto parameters
         this.creationDate = java.time.ZonedDateTime.now();
     }
 
     public Dragon(Long id, String name, Coordinates coordinates, ZonedDateTime creationDate, long age, long weight,
-            DragonType type, DragonCharacter character, DragonCave cave) throws InvalidValueException {
+            DragonType type, DragonCharacter character, DragonCave cave, Long dragonCaveId) throws InvalidValueException {
         // use other constructor
-        this(name, coordinates, age, weight, type, character, cave);
+        this(name, coordinates, age, weight, type, character, cave, dragonCaveId);
         // add auto parameters
         this.creationDate = creationDate;
         this.id = id;
+    }
+
+    public Long getDragonCaveId() {
+        return dragonCaveId;
+    }
+
+    public void setDragonCaveId(Long dragonCaveId) {
+        this.dragonCaveId = dragonCaveId;
     }
 
     public DragonCave getCave() {

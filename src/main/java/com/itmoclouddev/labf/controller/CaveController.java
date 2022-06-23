@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itmoclouddev.labf.filter.DragonFilter;
-import com.itmoclouddev.labf.model.Dragon;
+import com.itmoclouddev.labf.model.DragonCave;
 import com.itmoclouddev.labf.model.DragonCharacter;
 import com.itmoclouddev.labf.model.DragonType;
+import com.itmoclouddev.labf.service.CaveService;
+import com.itmoclouddev.labf.service.CaveServiceImpl;
 import com.itmoclouddev.labf.service.DragonCaveService;
 import com.itmoclouddev.labf.service.DragonCaveServiceImpl;
-import com.itmoclouddev.labf.service.DragonService;
-import com.itmoclouddev.labf.service.DragonServiceImpl;
 
 @RestController
-@RequestMapping("/dragons")
-public class DragonController {
+@RequestMapping("/caves")
+public class CaveController {
 
-    private DragonService dragonService;
+    private CaveService caveService;
 
-    public DragonController() {
+    public CaveController() {
         super();
 
-        dragonService = new DragonServiceImpl();
+        caveService = new CaveServiceImpl();
     }
 
     @GetMapping
-    public Collection<Dragon> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
+    public Collection<DragonCave> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "10") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
             DragonFilter filter) {
 
-        Collection<Dragon> dragons = dragonService.getAll();
+        Collection<DragonCave> dragons = caveService.getAll();
         if (!(filter == null)) {
-            dragons = dragonService.getFiltered(dragons, filter);
+            dragons = caveService.getFiltered(dragons, filter);
         }
         if (!(sortvalues == null)) {
-            dragons = dragonService.getSorted(dragons, sortvalues);
+            dragons = caveService.getSorted(dragons, sortvalues);
         }
-        return dragonService.getPage(dragons, offset, limit);
+        return caveService.getPage(dragons, offset, limit);
     }
 
     @GetMapping("/test")
@@ -57,13 +57,13 @@ public class DragonController {
     }
 
     @GetMapping("/{id}")
-    public Dragon getDragon(@PathVariable("id") long id) {
-        return dragonService.get(id);
+    public DragonCave getDragon(@PathVariable("id") long id) {
+        return caveService.get(id);
     }
 
     @PostMapping
-    public ResponseEntity<String> addDragon(@RequestBody Dragon dragon) {
-        long id = dragonService.add(dragon);
+    public ResponseEntity<String> addDragon(@RequestBody DragonCave dragon) {
+        long id = caveService.add(dragon);
         if (id > 0) {
             URI uri = URI.create("/dragons/" + id);
             // System.out.println(uri.toString());
@@ -74,8 +74,8 @@ public class DragonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Dragon> deleteDragon(@PathVariable("id") long id) {
-        Dragon deleted = dragonService.delete(id);
+    public ResponseEntity<DragonCave> deleteDragon(@PathVariable("id") long id) {
+        DragonCave deleted = caveService.delete(id);
         if (deleted != null) { // if there was dragon with such id
             return ResponseEntity.ok().body(deleted);
         } else {
@@ -84,29 +84,14 @@ public class DragonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> putDragon(@PathVariable("id") long id, @RequestBody Dragon dragon) {
-        Dragon currentDragon = dragonService.get(id);
+    public ResponseEntity<Void> putDragon(@PathVariable("id") long id, @RequestBody DragonCave dragon) {
+        DragonCave currentDragon = caveService.get(id);
         if (currentDragon == null) { // dragon not found
             return ResponseEntity.notFound().build();
         }
         // dragon exists -> update it
-        dragonService.update(id, dragon);
+        caveService.update(id, dragon);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/typeless")
-    public long getTypeLessThan(@RequestParam(name = "type", required = true) DragonType type) {
-        return dragonService.countTypeLessThan(dragonService.getAll(), type);
-    }
-
-    @GetMapping("/charactermore")
-    public long getCharacterLessThan(@RequestParam(name = "character", required = true) DragonCharacter character) {
-        return dragonService.countCharacterMoreThan(dragonService.getAll(), character);
-    }
-
-    @GetMapping("/namestarts")
-    public Collection<Dragon> getNameStartsWith(@RequestParam(name = "name", required = true) String name) {
-        return dragonService.nameStartsWith(dragonService.getAll(), name);
     }
 
 }
