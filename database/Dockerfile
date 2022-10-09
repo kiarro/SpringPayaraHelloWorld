@@ -8,3 +8,4 @@ ENV POSTGRES_PASSWORD dragon
 ENV POSTGRES_DB dragon_base
 # copy sql script for creating tables
 COPY CreateTables.sql /docker-entrypoint-initdb.d/
+
