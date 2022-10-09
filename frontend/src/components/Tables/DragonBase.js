@@ -1,36 +1,41 @@
 import './DragonBase.css'
-import leftArrow from './left-arrow.png'
-import rightArrow from './right-arrow.png'
 import React from 'react';
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+
+const defaultSorted = [{
+  dataField: 'id',
+  order: 'desc'
+}];
+
+const selectRow = {
+  mode: 'checkbox',
+  clickToSelect: true
+};
 
 class DragonBase extends React.Component {
   render() {
+    const options = {
+    page: 2,
+    sizePerPage: 4,
+    nextPageText: '>',
+    prePageText: '<',
+    showTotal: true,
+    hideSizePerPage: true,
+    hidePageListOnlyOnePage: true
+    }
     return (
-      <table>
-          <thead>
-            {this.props.headers.map((header, i) => 
-              <th scope="col" key={i}>{header}</th>
-            )}
-          </thead>
-          <tbody>
-          {this.props.rows.map((row, i) => 
-            <tr key={i}>
-              {row.map((cell, i) =>
-                (this.props.rowHeaders && i < 1) ? (
-                  <th scope="row" key={i}>{cell}</th>
-                ) : (
-                  <td key={i}>{cell}</td>
-                )
-              )}
-            </tr>
-           )}
-        </tbody>
-        <tfoot>
-              <th>{this.props.page}</th>
-              <th><img src={leftArrow} className="Arrow" alt="to left" /></th>
-              <th><img src={rightArrow} className="Arrow" alt="to right" /></th>
-          </tfoot>
-      </table>
+      <BootstrapTable 
+      keyField='id' data={ this.props.rows } columns={ this.props.headers }
+      pagination={ paginationFactory(options) }
+      defaultSorted={ defaultSorted }
+      filter={ filterFactory() }
+      cellEdit={ cellEditFactory({ mode: 'click' }) }
+      selectRow={ selectRow }
+      />
     );
   }
 }
