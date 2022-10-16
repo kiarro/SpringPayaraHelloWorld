@@ -21,7 +21,52 @@ td {
   margin-top: 0px !important;
   font-family: Mason Sans OT,serif;
 }
+.page-item{
+display: inline;
+margin-right: 5px; /* Отступ слева */
+padding: 5px;
+width: 6px;
+height: 6px;
+border-radius: 20%;
+background-color: #6b63b5;
+}
+.active.page-item
+{
+display: inline;
+margin-right: 5px; /* Отступ слева */
+padding: 5px;
+width: 6px;
+height: 6px;
+border-radius: 20%;
+background-color: #6b63b5;
+}
 
-.react-bootstrap-table-pagination-list-hidden {
+.page-link
+{
+  color: #fff;
+  text-align: center;
+  text-decoration: none; 
+}
+
+.sr-only
+{
   display: none;
+}
+
+.filter.number-filter
+{
+  display: inline;
+}
+
+.number-filter-column-id
+{
+  display: inline;
+  width: 10px;
+  box-sizing: content-box;
+}
+
+.select-filter-column-type
+{
+  width: 50%;
+  box-sizing: content-box;
 }
