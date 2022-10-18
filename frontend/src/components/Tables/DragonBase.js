@@ -16,16 +16,22 @@ const selectRow = {
   clickToSelect: true
 };
 
+const customTotal = (from, to, size) => (
+  <span className="react-bootstrap-table-pagination-total">
+    Страница { from } размером { to }, всего { size } драконов
+  </span>
+);
+
 class DragonBase extends React.Component {
   render() {
     const options = {
-    page: 2,
-    sizePerPage: 4,
+    sizePerPage: 5,
     nextPageText: '>',
     prePageText: '<',
-    showTotal: true,
     hideSizePerPage: true,
-    hidePageListOnlyOnePage: true
+    hidePageListOnlyOnePage: true,
+    //showTotal: true,
+    paginationTotalRenderer: customTotal
     }
     return (
       <BootstrapTable 

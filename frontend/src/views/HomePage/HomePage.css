@@ -1,10 +1,9 @@
 footer
 {
- width: 100%;
  position: absolute;
  left: 0;
  bottom: 0;
- height: 300px;
+ width: 100%;
 }
 
 ul
@@ -15,4 +14,12 @@ list-style: none;
 .NeededOperations
 {
     width: 300px;
+}
+
+.OperationItem
+{
+    display:inline-block;
+    width:30%;
+    margin: 10px;
+    padding:10px;
 }

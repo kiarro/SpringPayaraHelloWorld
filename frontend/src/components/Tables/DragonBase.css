@@ -21,7 +21,56 @@ td {
   margin-top: 0px !important;
   font-family: Mason Sans OT,serif;
 }
+.page-item{
+display: inline;
+margin-right: 5px; /* Отступ слева */
+padding: 5px;
+width: 6px;
+height: 6px;
+border-radius: 20%;
+background-color: #6b63b5;
+}
+.active.page-item
+{
+display: inline;
+margin-right: 5px; /* Отступ слева */
+padding: 5px;
+width: 6px;
+height: 6px;
+border-radius: 20%;
+background-color: #6b63b5;
+}
 
-.react-bootstrap-table-pagination-list-hidden {
+.page-link
+{
+  color: #fff;
+  text-align: center;
+  text-decoration: none; 
+}
+
+.sr-only
+{
   display: none;
+}
+
+.filter.number-filter
+{
+  display: inline;
+}
+
+.number-filter-comparator {
+  
+  float: right;
+}
+
+.number-filter-input {
+  margin-left: 5px;
+  float: center;
+  width: 100%;
+}
+
+.filter {
+  margin-left: 5px;
+  float: center;
+  width: 100%;
 }
