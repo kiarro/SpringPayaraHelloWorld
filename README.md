@@ -17,11 +17,13 @@ WAR file is [here](https://github.com/kiarro/SpringPayaraHelloWorld/blob/master/
 
 ### database
 
+docker build -t kiarro/dragon-base:latest .
+
+docker run -p 1000:5432 kiarro/dragon-base
+
+### server
+
 docker build -t kiarro/dragon:latest .
-
-docker run -p 1000:5432 kiarro/dragon
-
-### 
 
 ## frontend
 
@@ -54,19 +56,38 @@ then move files from 'build' to 'src\main\webapp\WEB-INF\views'
 
 ssh vm-user@itmo-lab.cosm-lab.science -p 4208
 
+RnQGUx3ye4cRy8bk
+
 ### pull docker
 
-docker pull airhacks/glassfish
+docker pull kiarro/dragon-base:1710
 
-docker pull kiarro/dragon-payara
+docker pull kiarro/dragon:1710
 
 ### run docker
 
-docker run -p 1000:5432 -d kiarro/dragon
+```bash
+# docker run -p 1000:5432 -d kiarro/dragon
 
-docker run -d kiarro/dragon-payara
+# docker run -d kiarro/dragon-payara
 
-docker run -p 9091:4848 -d airhacks/glassfish
+# docker run -p 9091:4848 -d airhacks/glassfish
+
+docker-compose -p <name> up 
+docker-compose -p dragons up 
+```
+
+### go inside container
+
+```bash
+docker exec -it dragons_my-payara-project_1 /bin/bash
+```
+
+deploy app using is asadmin
+
+```bash
+deploy /opt/payara/deployments/dragons.war
+```
 
 ### change pool
 
