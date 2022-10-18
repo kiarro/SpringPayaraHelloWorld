@@ -3,7 +3,7 @@ import './HomePage.css';
 import DragonBase from './../../components/Tables/DragonBase'
 import HeaderButton from './../../components/Buttons/HeaderButton';
 import BaseInput from './../../components/Inputs/BaseInput';
-import filterFactory, { textFilter,selectFilter, numberFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter,selectFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter';
 import {
   BrowserRouter as Router,
   Routes,
@@ -32,7 +32,11 @@ const headers = [{
   dataField: 'id',
   text:'ID',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+    placeholder: 'Введите id'
+    }
+  )},{
   dataField:'name',
   text:'ИМЯ',
   sort: true,
@@ -46,39 +50,66 @@ const headers = [{
   dataField:'age',
   text:'ВОЗРАСТ',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+      placeholder: 'Введите возраст'
+    }
+  )},{
   dataField:'weight',
   text:'ВЕС',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+      style: { weight: 10 },
+      placeholder: 'Введите вес'
+    }
+  )},{
   dataField:'character',
   text:'ХАРАКТЕР',
   sort: true,
   filter: selectFilter({
-    options: selectCharacters
+    options: selectCharacters,
+    placeholder: 'Выберите характер'
   })},{
   dataField:'type',
   text:'ТИП',
   sort: true,
   filter: selectFilter({
-    options: selectTypes
+    options: selectTypes,
+    placeholder: 'Выберите тип'
   })},{
   dataField:'x',
   text:'Х',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+      placeholder: 'Введите Х'
+    }
+  )},{
   dataField:'y',
   text:'У',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+      placeholder: 'Введите У'
+    }
+  )},{
   dataField:'cave',
   text:'ГЛУБИНА ПЕЩЕРЫ',
   sort: true,
-  filter: numberFilter()},{
+  filter: numberFilter(
+    {
+      placeholder: 'Введите глубину пещеры'
+    }
+  )},{
   dataField:'treasure',
   text:'КОЛИЧЕСТВО СОКРОВИЩ',
   sort: true,
-  filter: numberFilter()}
+  filter: numberFilter(
+    {
+      placeholder: 'Введите количество сокровищ'
+    }
+  )}
 ];
 
 

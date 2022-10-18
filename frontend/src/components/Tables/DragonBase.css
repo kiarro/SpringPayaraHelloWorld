@@ -58,15 +58,19 @@ background-color: #6b63b5;
   display: inline;
 }
 
-.number-filter-column-id
-{
-  display: inline;
-  width: 10px;
-  box-sizing: content-box;
+.number-filter-comparator {
+  
+  float: right;
 }
 
-.select-filter-column-type
-{
-  width: 50%;
-  box-sizing: content-box;
+.number-filter-input {
+  margin-left: 5px;
+  float: center;
+  width: 100%;
+}
+
+.filter {
+  margin-left: 5px;
+  float: center;
+  width: 100%;
 }
