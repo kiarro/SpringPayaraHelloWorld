@@ -93,13 +93,17 @@ public class DragonAndCaveController {
     }
 
     @GetMapping("/typeless")
-    public long getTypeLessThan(@RequestParam(name = "type", required = true) DragonType type) {
-        return dragonCaveService.countTypeLessThan(dragonCaveService.getAll(), type);
+    public Object getTypeLessThan(@RequestParam(name = "type", required = true) DragonType type) {
+        return new Object(){
+            public final long value = dragonCaveService.countTypeLessThan(dragonCaveService.getAll(), type);
+        };
     }
 
     @GetMapping("/charactermore")
-    public long getCharacterLessThan(@RequestParam(name = "character", required = true) DragonCharacter character) {
-        return dragonCaveService.countCharacterMoreThan(dragonCaveService.getAll(), character);
+    public Object getCharacterLessThan(@RequestParam(name = "character", required = true) DragonCharacter character) {
+        return new Object(){
+            public final long value = dragonCaveService.countCharacterMoreThan(dragonCaveService.getAll(), character);
+        };
     }
 
     @GetMapping("/namestarts")
