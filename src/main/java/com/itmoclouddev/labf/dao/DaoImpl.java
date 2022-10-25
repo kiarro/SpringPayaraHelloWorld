@@ -46,6 +46,7 @@ public class DaoImpl implements Dao {
 
     }
 
+    
     @Override
     public Dragon getDragonAndCave(long id) throws DaoException, InvalidValueException, NotFoundException {
         try {
@@ -72,7 +73,7 @@ public class DaoImpl implements Dao {
                         new DragonCave(
                                 rs.getFloat("depth"),
                                 rs.getDouble("number_of_treasures")),
-                        rs.getLong("dragons.cave_id"));
+                        rs.getLong("cave_id"));
             } else {
                 throw new NotFoundException(String.format("Dragon with id=%d not found", id));
             }
@@ -223,7 +224,7 @@ public class DaoImpl implements Dao {
                                 new DragonCave(
                                         rs.getFloat("depth"),
                                         rs.getDouble("number_of_treasures")),
-                                rs.getLong("dragons.cave_id")));
+                                rs.getLong("cave_id")));
             }
 
             return collection;
@@ -256,7 +257,7 @@ public class DaoImpl implements Dao {
                         DragonType.valueOf(rs.getString("type")),
                         DragonCharacter.valueOf(rs.getString("character")),
                         null,
-                        rs.getLong("dragons.cave_id"));
+                        rs.getLong("cave_id"));
             } else {
                 throw new NotFoundException(String.format("Dragon with id=%d not found", id));
             }
@@ -379,7 +380,7 @@ public class DaoImpl implements Dao {
                                 DragonType.valueOf(rs.getString("type")),
                                 DragonCharacter.valueOf(rs.getString("character")),
                                 null,
-                                rs.getLong("dragons.cave_id")));
+                                rs.getLong("cave_id")));
             }
 
             return collection;
@@ -500,23 +501,4 @@ public class DaoImpl implements Dao {
             throw new DaoException("Error in database", e);
         }
     }
-
-    // @Override
-    // public Collection<Dragon> getDragonsAndCavesFiltered(Dragon filter) {
-    // // TODO Auto-generated method stub
-    // return null;
-    // }
-
-    // @Override
-    // public long countTypeLessThan(DragonType type) {
-    // // TODO Auto-generated method stub
-    // return 0;
-    // }
-
-    // @Override
-    // public long countCharacterMoreThan(DragonCharacter character) {
-    // // TODO Auto-generated method stub
-    // return 0;
-    // }
-
 }

@@ -14,11 +14,17 @@
 .IdFor
 {
     font-size: 11px;
-    color: #fff;
+    /* color: #fff; */
     position: relative;
     font-family: Mason Sans OT,serif;
     font-weight: 700;
     line-height: 2;
     width: 100%;
     letter-spacing: 1.1px;
+}
+
+.Select
+{
+    height: 30px;
+    width: 320px;
 }

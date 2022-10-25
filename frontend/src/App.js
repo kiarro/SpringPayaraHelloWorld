@@ -10,35 +10,46 @@ import {
   Routes,
   Route,
   Link,
-  useRouteMatch,
+  useLocation,
   useParams,
 } from 'react-router-dom';
 import ReturnArray from './views/ReturnArray/ReturnArray';
 
-function App() {
+function BackButton() {
+  let location = useLocation();
+  // console.log(location);
 
   return (
+    <nav className='ButtonContainerLeft' hidden={location.pathname=="/"}>
+      <Link to=""><HeaderButton name="Назад" /></Link>
+    </nav>
+  );
+}
+
+function App() {
+  return (
     <div className="App">
-      <body>
+      <div className="Body">
         <Router>
-        <header className="App-header">
-        <div className='App-logo'><Link to="/"><img src={dragon} className="App-logo" alt="logo" /></Link></div>
-        <nav className='ButtonContainer'> 
-        <Link to="adddragon"><HeaderButton name="Добавить дракона"/></Link>
-        </nav>      
-        </header>
-        <Routes>
-        <Route path='' element={<HomePage/>} />
-        <Route path='adddragon' element={<AddDragon/>} />
-        <Route path='charactercount' element={<ReturnCount type="характер которых которых больше 1" count="5"/>} />
-        <Route path='typecount' element={<ReturnCount type="тип которых которых меньше 1" count="5"/>} />
-        <Route path='returnarray' element={<ReturnArray namesubstring="Мераксес"/>} />
-        </Routes>
+          <header className="App-header">
+            <BackButton/>
+            <div className='App-logo'><Link to="/"><img src={dragon} className="App-logo" alt="logo" /></Link></div>
+            <nav className='ButtonContainer'>
+              <Link to="adddragon"><HeaderButton name="Добавить дракона" /></Link>
+            </nav>
+          </header>
+          <Routes>
+            <Route path='' element={<HomePage />} />
+            <Route path='adddragon' element={<AddDragon />} />
+            <Route path='charactermore' element={<ReturnCount type="характер которых больше" param="character" />} />
+            <Route path='typeless' element={<ReturnCount type="тип которых меньше" param="type" />} />
+            <Route path='namestarts' element={<ReturnArray namesubstring="Мераксес" />} />
+          </Routes>
         </Router>
-        </body>
+      </div>
     </div>
   );
-  
+
 }
 
 export default App;

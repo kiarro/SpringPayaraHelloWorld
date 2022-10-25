@@ -16,10 +16,7 @@
 		<cglib.version>3.2.10</cglib.version>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
-
 		<frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
-		<node.version>v16.15.0</node.version>
-		<yarn.version>v1.22.19</yarn.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -43,28 +40,17 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 			<scope>provided</scope>
-		</dependency><!-- Thymeleaf -->
-		<dependency>
-			<groupId>org.thymeleaf</groupId>
-			<artifactId>thymeleaf-spring5</artifactId>
-			<version>3.0.11.RELEASE</version>
-		</dependency><!-- Commons Upload for File upload -->
-		<dependency>
-			<groupId>commons-fileupload</groupId>
-			<artifactId>commons-fileupload</artifactId>
-			<version>1.4</version>
-			<scope>runtime</scope>
 		</dependency><!-- Jackson JSON Mapper -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.8</version>
 		</dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-            <version>2.13.2</version>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.13.2</version>
+		</dependency>
 	</dependencies>
 	<repositories>
 		<repository>
