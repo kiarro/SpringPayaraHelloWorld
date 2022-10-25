@@ -3,6 +3,8 @@ import './HomePage.css';
 import DragonBase from './../../components/Tables/DragonBase'
 import HeaderButton from './../../components/Buttons/HeaderButton';
 import BaseInput from './../../components/Inputs/BaseInput';
+import Select from './../../components/Inputs/Select';
+
 import filterFactory, { textFilter,selectFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter';
 import {
   BrowserRouter as Router,
@@ -12,6 +14,11 @@ import {
   useRouteMatch,
   useParams,
 } from 'react-router-dom';
+
+import {
+  useEffect,
+  useState
+} from 'react'
 
 const selectTypes = {
   WATER: 'WATER',
@@ -78,7 +85,7 @@ const headers = [{
     options: selectTypes,
     placeholder: 'Выберите тип'
   })},{
-  dataField:'x',
+  dataField:'coordinates.x',
   text:'Х',
   sort: true,
   filter: numberFilter(
@@ -86,7 +93,7 @@ const headers = [{
       placeholder: 'Введите Х'
     }
   )},{
-  dataField:'y',
+  dataField:'coordinates.y',
   text:'У',
   sort: true,
   filter: numberFilter(
@@ -94,7 +101,7 @@ const headers = [{
       placeholder: 'Введите У'
     }
   )},{
-  dataField:'cave',
+  dataField:'cave.depth',
   text:'ГЛУБИНА ПЕЩЕРЫ',
   sort: true,
   filter: numberFilter(
@@ -102,7 +109,7 @@ const headers = [{
       placeholder: 'Введите глубину пещеры'
     }
   )},{
-  dataField:'treasure',
+  dataField:'cave.numberOfTreasures',
   text:'КОЛИЧЕСТВО СОКРОВИЩ',
   sort: true,
   filter: numberFilter(
@@ -131,53 +138,88 @@ const rows = [
 {id:'15',name: 'Мераксес',age:'181',weight: '18',character:'CHAOTIC',type:'WATER',x:'12',y:'4',cave:'1400',treasure:'157'}
 ];
 
+
 function HomePage()
 {
-  return (
-    <div>
-    <main>
-    <DragonBase rows={rows} headers={headers} rowHeaders page="1 из я хуй знает скольки" />
-    </main>
-    <footer>
-    <ul>
+  const [error, setError] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [dragons, setDragons] = useState([]);
+
+  const [namestarts, setNamestarts] = useState("");
+  const [charactermore, setCharactermore] = useState("CUNNING");
+  const [typeless, setTypeless] = useState("WATER");
+
+  useEffect(() => {
+    fetch("/dragonscaves")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          setIsLoaded(true);
+          setDragons(result);
+        },
+        (error) => {
+          setIsLoaded(true);
+          setError(error);
+        }
+      )
+  }, [])
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div>
+      <main>
+      <DragonBase rows={dragons} headers={headers} rowHeaders page="1 из я хуй знает скольки" />
+      </main>
+      <footer>
+      <ul>
+        <li className='OperationItem'>
+      <ul className='NeededOperations'>
+      <li>
+      <BaseInput 
+      name="Массив драконов, имя которых начинается с:" 
+      enter="Введите подстроку имени"
+      value={namestarts} onChange={(e) => setNamestarts(e.target.value)}
+      />
+      </li>
+      <li><Link to={"/namestarts?name="+namestarts}><HeaderButton name="Вернуть"/></Link></li>
+      </ul>
+      </li>
+        <li className='OperationItem'>
+      <ul className='NeededOperations'> 
+      <li>
+      <Select 
+      name="Количество драконов, характер которых больше:"
+      enter="Введите характер"
+      value={charactermore} onChange={(e) => setCharactermore(e.target.value)} 
+      options={["CUNNING", "WISE", "CHAOTIC", "CHAOTIC_EVIL", "FICKLE"]}>
+      </Select>
+      </li>
+      <li><Link to={'/charactermore?character='+charactermore}> <HeaderButton name="Вернуть"/></Link> </li>
+      </ul>
+      </li>
       <li className='OperationItem'>
-    <ul className='NeededOperations'>
-    <li>
-    <BaseInput 
-    name="Массив драконов, имя которых начинается с:" 
-    enter="Введите подстроку имени"
-    />
-    </li>
-    <li><Link to="/returnarray"><HeaderButton name="Вернуть"/></Link></li>
-    </ul>
-    </li>
-      <li className='OperationItem'>
-    <ul className='NeededOperations'> 
-    <li>
-    <BaseInput 
-    name="Количество драконов, характер которых больше:" 
-    enter="Введите характер"
-    />
-    </li>
-    <li><Link to='/charactercount'> <HeaderButton name="Вернуть"/></Link> </li>
-    </ul>
-    </li>
-    <li className='OperationItem'>
-    <ul className='NeededOperations'>
-    <li>
-    <BaseInput 
-    name="Количество драконов,тип которых меньше:" 
-    enter="Введите тип"
-    />
-    </li>
-    <li><Link to='/typecount'> <HeaderButton name="Вернуть"/> </Link></li>
-    </ul> 
-    </li>   
-    </ul>
-    
-    </footer>
-    </div>
-  );
+      <ul className='NeededOperations'>
+      <li>
+      <Select 
+      name="Количество драконов, тип которых меньше:"
+      enter="Введите тип"
+      value={typeless} onChange={(e) => setTypeless(e.target.value)} 
+      options={["WATER", "UNDERGROUND", "AIR", "FIRE"]}>
+      </Select>
+      </li>
+      <li><Link to={'/typeless?type='+typeless}> <HeaderButton name="Вернуть"/> </Link></li>
+      </ul> 
+      </li>   
+      </ul>
+      
+      </footer>
+      </div>
+    );
+  }
 }
 
 export default HomePage;

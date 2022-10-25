@@ -43,6 +43,14 @@
   position:absolute;
 }
 
+.ButtonContainerLeft
+{
+  left: 0;
+  position: absolute;
+  margin-left: 30px;
+  position:absolute;
+}
+
 main
 {
   position: absolute;
@@ -50,7 +58,7 @@ main
   width: 100%;
 }
 
- body
+ .Body
  {
   position: absolute;
   top: 0px;
