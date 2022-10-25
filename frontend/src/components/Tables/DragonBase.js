@@ -13,7 +13,8 @@ const defaultSorted = [{
 
 const selectRow = {
   mode: 'checkbox',
-  clickToSelect: true
+  clickToSelect: true,
+  clickToEdit: true
 };
 
 const customTotal = (from, to, size) => (
