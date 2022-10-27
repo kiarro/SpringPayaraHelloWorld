@@ -79,9 +79,9 @@ function HomePage() {
   }, [])
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div className='centered'>Error: {error.message}</div>;
   } else if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <div className='centered'>Loading...</div>;
   } else {
     return (
       <div>

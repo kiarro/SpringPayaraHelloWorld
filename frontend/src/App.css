@@ -69,5 +69,10 @@ main
   height: 100%;
  }
 
-
-
+.centered
+{
+  top: 200px;
+  position: relative;
+  margin: auto;
+  width: fit-content;
+}

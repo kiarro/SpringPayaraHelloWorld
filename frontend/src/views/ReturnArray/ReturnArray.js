@@ -132,14 +132,20 @@ function ReturnArray(props)
       )
   }, [])
 
-  return (
-    <div>
-    {/* <header><h1>Массив драконов {name}:</h1></header> */}
-    <main>
-    <DragonBase rows={dragons} headers={headers} rowHeaders page="1 из я хуй знает скольки" />
-    </main>
-    </div>
-  );
+  if (error) {
+    return <div className='centered'>Error: {error.message}</div>;
+  } else if (!isLoaded) {
+    return <div className='centered'>Loading...</div>;
+  } else {
+    return (
+      <div>
+      {/* <header><h1>Массив драконов {name}:</h1></header> */}
+      <main>
+      <DragonBase rows={dragons} headers={headers} rowHeaders page="1 из я хуй знает скольки" />
+      </main>
+      </div>
+    );
+  }
 }
 
 export default ReturnArray;
