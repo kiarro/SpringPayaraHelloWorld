@@ -5,6 +5,7 @@ table
 	  overflow: hidden;
     font-family: Mason Sans OT,serif;
 	  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+
 }
 
 
@@ -73,4 +74,15 @@ background-color: #6b63b5;
   margin-left: 5px;
   float: center;
   width: 100%;
+}
+
+.col-md-6.col-xs-6.col-sm-6.col-lg-6
+{
+width: 100%;
+float: left;
+}
+
+.react-bootstrap-table-pagination-total
+{
+  box-sizing: border-box;
 }

@@ -5,6 +5,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import HeaderButton from './../../components/Buttons/HeaderButton';
 
 const defaultSorted = [{
   dataField: 'id',
@@ -13,13 +14,15 @@ const defaultSorted = [{
 
 const selectRow = {
   mode: 'checkbox',
-  clickToSelect: true,
-  clickToEdit: true
+  //clickToSelect: true,
+  clickToEdit:true,
+  hideSelectAll: true,
+  //selectColumnPosition: 'right',
 };
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total">
-    Страница { from } размером { to }, всего { size } драконов
+    <HeaderButton name="Удалить"/>
   </span>
 );
 
@@ -31,10 +34,18 @@ class DragonBase extends React.Component {
     prePageText: '<',
     hideSizePerPage: true,
     hidePageListOnlyOnePage: true,
-    //showTotal: true,
-    paginationTotalRenderer: customTotal
+    showTotal: true,
+    paginationTotalRenderer: customTotal,
+    sizePerPageList: [{
+      text: '5', value: 5
+    }, {
+      text: '10', value: 10
+    }, {
+      text: 'All', value: this.props.rows.length
+    }] 
     }
     return (
+      //<div style="overflow: scroll;"> 
       <BootstrapTable 
       keyField='id' data={ this.props.rows } columns={ this.props.headers }
       pagination={ paginationFactory(options) }
@@ -42,7 +53,10 @@ class DragonBase extends React.Component {
       filter={ filterFactory() }
       cellEdit={ cellEditFactory({ mode: 'click' }) }
       selectRow={ selectRow }
+      rowStyle={ {overflow:'scroll' } }
       />
+      //</div>
+
     );
   }
 }
