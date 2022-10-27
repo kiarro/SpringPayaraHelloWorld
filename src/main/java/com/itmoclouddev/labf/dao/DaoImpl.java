@@ -193,7 +193,7 @@ public class DaoImpl implements Dao {
                     new DragonCave(
                             rs.getFloat("depth"),
                             rs.getDouble("number_of_treasures")),
-                    rs.getLong("del1.cave_id"));
+                    rs.getLong("cave_id"));
         } catch (SQLException e) {
             throw new DaoException("Error in database", e);
         }
