@@ -4,7 +4,7 @@ import React from 'react';
 function HeaderButton(props)
 {
     return(
-    <button className="HeaderButton" >{props.name}</button>
+    <button className="HeaderButton" onClick={props.onClick} >{props.name}</button>
     );
 }
 

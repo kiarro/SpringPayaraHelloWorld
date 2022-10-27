@@ -15,19 +15,6 @@ const defaultSorted = [{
   order: 'desc'
 }];
 
-const selectRow = {
-  mode: 'checkbox',
-  clickToEdit: true,
-  hideSelectAll: true,
-  //selectColumnPosition: 'right',
-};
-
-const customTotal = (from, to, size) => (
-  <span className="react-bootstrap-table-pagination-total">
-    <HeaderButton name="Удалить" />
-  </span>
-);
-
 const selectTypes = {
   WATER: 'WATER',
   UNDERGROUND: 'UNDERGROUND',
@@ -159,11 +146,55 @@ class DragonBase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null
+      error: null,
+      selected: [],
+      rows: props.rows,
     };
   }
 
+  handleOnSelect = (row, isSelect) => {
+    if (isSelect) {
+      this.setState(() => ({
+        selected: [row.id]
+      }));
+    } else {
+      this.setState(() => ({
+        selected: []
+      }));
+    }
+  }
+
+  onDelete = () => {
+    // console.log(this.state.selected);
+    let id = this.state.selected[0];
+    fetch('/dragonscaves/'+id, {
+      method: 'DELETE',
+    })
+    .then(res => {
+      if (res.ok) {
+        this.setState({ rows: this.state.rows.filter(o => id !== o.id) });
+      } else {
+        this.setState({error: res.status});
+      }
+    });
+  }
+
+  customTotal = (from, to, size) => (
+    <span className="react-bootstrap-table-pagination-total">
+      <HeaderButton name="Удалить выделенные" onClick={this.onDelete} />
+    </span>
+  );
+
   render() {
+
+    const selectRow = {
+      mode: 'checkbox',
+      clickToEdit: true,
+      hideSelectAll: true,
+      selected: this.state.selected,
+      onSelect: this.handleOnSelect,
+      //selectColumnPosition: 'right',
+    };
 
     const options = {
       paginationSize: 4,
@@ -173,21 +204,21 @@ class DragonBase extends React.Component {
       prePageText: '<',
       // hideSizePerPage: true,
       hidePageListOnlyOnePage: true,
-      // showTotal: true,
-      // paginationTotalRenderer: customTotal,
+      showTotal: true,
+      paginationTotalRenderer: this.customTotal,
       sizePerPageList: [{
         text: '5', value: 5
       }, {
         text: '10', value: 10
       }, {
-        text: 'All', value: this.props.rows.length
+        text: 'All', value: this.state.rows.length
       }]
     }
 
     return (
       <div>
         <BootstrapTable
-          keyField='id' data={this.props.rows} columns={headers}
+          keyField='id' data={this.state.rows} columns={headers}
           pagination={paginationFactory(options)}
           defaultSorted={defaultSorted}
           filter={filterFactory()}
@@ -205,18 +236,16 @@ class DragonBase extends React.Component {
               }).then(res => {
                 console.log(res.status);
                 if (res.ok) {
-                  this.setState({error: null});
+                  this.setState({ error: null });
                 } else {
-                  this.setState({error: res.status});
+                  this.setState({ error: res.status });
                 }
               });
             }
           })}
           selectRow={selectRow}
         />
-        {/* <div className='errorm'> */}
         <ErrorMessage text={this.state.error} />
-        {/* </div> */}
       </div>
 
     );
