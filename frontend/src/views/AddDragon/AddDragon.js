@@ -49,6 +49,7 @@ function AddDragon() {
         body: JSON.stringify(body),
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
       })
       .then(res => {

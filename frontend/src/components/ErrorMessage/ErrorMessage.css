@@ -1,9 +1,13 @@
 .centered
 {
-  border: 2px solid red;
   padding: 10px;
   text-align: center;
-  color: red;
   position: relative;
   margin: auto;
+}
+
+.error
+{
+    border: 2px solid red;
+    color: red;
 }

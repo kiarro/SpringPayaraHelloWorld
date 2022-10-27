@@ -51,11 +51,11 @@ function App() {
           </header>
           <Routes>
             <Route path='' element={<HomePage />} />
-            <Route path='adddragon' element={<AddDragon />} />
-            <Route path='charactermore' element={<ReturnCount type="характер которых больше" param="character" />} />
-            <Route path='typeless' element={<ReturnCount type="тип которых меньше" param="type" />} />
-            <Route path='namestarts' element={<ReturnArray namesubstring="Мераксес" />} />
-            <Route path='test' element={<Test />} />
+            <Route path='/adddragon' element={<AddDragon />} />
+            <Route path='/charactermore' element={<ReturnCount type="характер которых больше" param="character" />} />
+            <Route path='/typeless' element={<ReturnCount type="тип которых меньше" param="type" />} />
+            <Route path='/namestarts' element={<ReturnArray namesubstring="Мераксес" />} />
+            <Route path='/test' element={<Test />} />
           </Routes>
         </Router>
       </div>

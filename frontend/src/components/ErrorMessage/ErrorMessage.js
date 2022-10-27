@@ -3,7 +3,7 @@ import './ErrorMessage.css';
 
 function ErrorMessage(props) {
     let text = props.text;
-    return <div className='centered' hidden={!text}>Ошибка: http status code {text}</div>;
+    return <div className='centered error' hidden={!text}>Ошибка: {text}</div>;
     
   }
   

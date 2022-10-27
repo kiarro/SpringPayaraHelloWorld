@@ -3,6 +3,7 @@ import './ReturnArray.css';
 import filterFactory, { textFilter,selectFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter';
 import DragonBase from './../../components/Tables/DragonBase';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 import {
   useEffect,
@@ -118,9 +119,17 @@ function ReturnArray(props)
   const [dragons, setDragons] = useState([]);
 
   useEffect(() => {
-    fetch("/dragonscaves/namestarts?name="+name)
-      .then(res => res.json())
-      .then(
+    fetch("/api/dragonscaves/namestarts?name="+name, {
+      headers: {
+        'Accept': 'application/json',
+      }
+    }).then(res => {
+      if (res.ok){
+        return res.json();
+      } else {
+        throw {message: 'HTTP status code '+res.status};
+      }
+    }).then(
         (result) => {
           setIsLoaded(true);
           setDragons(result);
@@ -133,15 +142,23 @@ function ReturnArray(props)
   }, [])
 
   if (error) {
-    return <div className='centered'>Error: {error.message}</div>;
+    return (
+      <main>
+        <ErrorMessage text={error.message}></ErrorMessage>
+      </main>
+    );
   } else if (!isLoaded) {
-    return <div className='centered'>Loading...</div>;
+    return (
+      <main>
+        <div className='centered'>Loading...</div>
+      </main>
+    );
   } else {
     return (
       <div>
       {/* <header><h1>Массив драконов {name}:</h1></header> */}
       <main>
-      <DragonBase rows={dragons} headers={headers} rowHeaders page="1 из я хуй знает скольки" />
+      <DragonBase rows={dragons} headers={headers} rowHeaders />
       </main>
       </div>
     );

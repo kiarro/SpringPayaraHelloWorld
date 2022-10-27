@@ -167,8 +167,11 @@ class DragonBase extends React.Component {
   onDelete = () => {
     // console.log(this.state.selected);
     let id = this.state.selected[0];
-    fetch('/dragonscaves/'+id, {
+    fetch("/api/dragonscaves/"+id, {
       method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+      }
     })
     .then(res => {
       if (res.ok) {
@@ -227,25 +230,24 @@ class DragonBase extends React.Component {
             afterSaveCell: (oldv, newv, row, col) => {
               console.log(row);
               // console.log(col);
-              fetch("/dragonscaves/" + row.id, {
+              fetch("/api/dragonscaves/" + row.id, {
                 method: 'PUT',
                 body: JSON.stringify(row),
                 headers: {
                   'Content-Type': 'application/json',
                 },
               }).then(res => {
-                console.log(res.status);
                 if (res.ok) {
                   this.setState({ error: null });
                 } else {
-                  this.setState({ error: res.status });
+                  this.setState({ error: 'HTTP status code '+res.status });
                 }
               });
             }
           })}
           selectRow={selectRow}
         />
-        <ErrorMessage text={this.state.error} />
+        <ErrorMessage text={this.state.error}/>
       </div>
 
     );
