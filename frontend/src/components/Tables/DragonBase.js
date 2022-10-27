@@ -3,8 +3,9 @@ import React from 'react';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import filterFactory, { textFilter, selectFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter';
+import { Type } from 'react-bootstrap-table2-editor';
 import HeaderButton from './../../components/Buttons/HeaderButton';
 
 const defaultSorted = [{
@@ -14,7 +15,7 @@ const defaultSorted = [{
 
 const selectRow = {
   mode: 'checkbox',
-  //clickToSelect: true,
+  // //clickToSelect: true,
   clickToEdit:true,
   hideSelectAll: true,
   //selectColumnPosition: 'right',
@@ -25,6 +26,132 @@ const customTotal = (from, to, size) => (
     <HeaderButton name="Удалить"/>
   </span>
 );
+
+const selectTypes = {
+  WATER: 'WATER',
+  UNDERGROUND: 'UNDERGROUND',
+  AIR: 'AIR',
+  FIRE: 'FIRE'
+};
+
+const selectCharacters = {
+  CUNNING: 'CUNNING',
+  WISE: 'WISE',
+  CHAOTIC: 'CHAOTIC',
+  CHAOTIC_EVIL: 'CHAOTIC_EVIL',
+  FICKLE: 'FICKLE'
+};
+
+const headers = [{
+  dataField: 'id',
+  text: 'ID',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите id'
+    }
+  )
+}, {
+  dataField: 'name',
+  text: 'ИМЯ',
+  sort: true,
+  filter: textFilter({
+    placeholder: 'Введите имя',  // custom the input placeholder
+    //style: { backgroundColor: '#6b63b5' },
+    className: 'my-custom-text-filter' // custom classname on input
+
+  })
+}, {
+  dataField: 'age',
+  text: 'ВОЗРАСТ',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите возраст'
+    }
+  )
+}, {
+  dataField: 'weight',
+  text: 'ВЕС',
+  sort: true,
+  filter: numberFilter(
+    {
+      style: { weight: 10 },
+      placeholder: 'Введите вес'
+    }
+  )
+}, {
+  dataField: 'character',
+  text: 'ХАРАКТЕР',
+  sort: true,
+  filter: selectFilter({
+    options: selectCharacters,
+    placeholder: 'Выберите характер'
+  }),
+  editor: {
+    type: Type.SELECT,
+    options: Object.entries(selectCharacters).map(([key, value]) => {
+      return {
+        value: key,
+        label: value
+      }
+    })
+  }
+}, {
+  dataField: 'type',
+  text: 'ТИП',
+  sort: true,
+  filter: selectFilter({
+    options: selectTypes,
+    placeholder: 'Выберите тип'
+  }),
+  editor: {
+    type: Type.SELECT,
+    options: Object.entries(selectTypes).map(([key, value]) => {
+      return {
+        value: key,
+        label: value
+      }
+    })
+  }
+}, {
+  dataField: 'coordinates.x',
+  text: 'Х',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите Х'
+    }
+  )
+}, {
+  dataField: 'coordinates.y',
+  text: 'У',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите У'
+    }
+  )
+}, {
+  dataField: 'cave.depth',
+  text: 'ГЛУБИНА ПЕЩЕРЫ',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите глубину пещеры'
+    }
+  )
+}, {
+  dataField: 'cave.numberOfTreasures',
+  text: 'КОЛИЧЕСТВО СОКРОВИЩ',
+  sort: true,
+  filter: numberFilter(
+    {
+      placeholder: 'Введите количество сокровищ'
+    }
+  )
+}
+];
 
 class DragonBase extends React.Component {
   render() {
@@ -47,11 +174,24 @@ class DragonBase extends React.Component {
     return (
       //<div style="overflow: scroll;"> 
       <BootstrapTable 
-      keyField='id' data={ this.props.rows } columns={ this.props.headers }
+      keyField='id' data={ this.props.rows } columns={ headers }
       pagination={ paginationFactory(options) }
       defaultSorted={ defaultSorted }
       filter={ filterFactory() }
-      cellEdit={ cellEditFactory({ mode: 'click' }) }
+      cellEdit={ cellEditFactory({ 
+        mode: 'click',
+        afterSaveCell: (oldv, newv, row, col) => {
+          console.log(row);
+          // console.log(col);
+          fetch("/dragonscaves/"+row.id, {
+            method: 'PUT',
+            body: JSON.stringify(row),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+        }
+      }) }
       selectRow={ selectRow }
       rowStyle={ {overflow:'scroll' } }
       />
