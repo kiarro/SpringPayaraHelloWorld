@@ -17,15 +17,14 @@ const defaultSorted = [{
 
 const selectRow = {
   mode: 'checkbox',
-  // //clickToSelect: true,
-  clickToEdit:true,
+  clickToEdit: true,
   hideSelectAll: true,
   //selectColumnPosition: 'right',
 };
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total">
-    <HeaderButton name="Удалить"/>
+    <HeaderButton name="Удалить" />
   </span>
 );
 
@@ -167,26 +166,27 @@ class DragonBase extends React.Component {
   render() {
 
     const options = {
-    sizePerPage: 5,
-    nextPageText: '>',
-    prePageText: '<',
-    hideSizePerPage: true,
-    hidePageListOnlyOnePage: true,
-    showTotal: true,
-    paginationTotalRenderer: customTotal,
-    sizePerPageList: [{
-      text: '5', value: 5
-    }, {
-      text: '10', value: 10
-    }, {
-      text: 'All', value: this.props.rows.length
-    }] 
+      paginationSize: 4,
+      pageStartIndex: 0,
+      sizePerPage: 5,
+      nextPageText: '>',
+      prePageText: '<',
+      // hideSizePerPage: true,
+      hidePageListOnlyOnePage: true,
+      // showTotal: true,
+      // paginationTotalRenderer: customTotal,
+      sizePerPageList: [{
+        text: '5', value: 5
+      }, {
+        text: '10', value: 10
+      }, {
+        text: 'All', value: this.props.rows.length
+      }]
     }
 
     return (
       <div>
-        //<div style="overflow: scroll;"> 
-      <BootstrapTable
+        <BootstrapTable
           keyField='id' data={this.props.rows} columns={headers}
           pagination={paginationFactory(options)}
           defaultSorted={defaultSorted}
@@ -204,18 +204,20 @@ class DragonBase extends React.Component {
                 },
               }).then(res => {
                 console.log(res.status);
-                if (!res.ok){
-                  this.state.error = res.status;
+                if (res.ok) {
+                  this.setState({error: null});
+                } else {
+                  this.setState({error: res.status});
                 }
               });
             }
           })}
           selectRow={selectRow}
-        rowStyle={ {overflow:'scroll' } }
-      />
+        />
+        {/* <div className='errorm'> */}
         <ErrorMessage text={this.state.error} />
+        {/* </div> */}
       </div>
-      //</div>
 
     );
   }

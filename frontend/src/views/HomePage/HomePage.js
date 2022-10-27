@@ -79,7 +79,7 @@ function HomePage() {
   const [typeless, setTypeless] = useState("WATER");
 
    useEffect(() => {
-     fetch("/dragonscaves")
+     fetch("/dragonscaves?limit=1000")
        .then(res => res.json())
        .then(
          (result) => {
@@ -104,7 +104,7 @@ function HomePage() {
           <DragonBase rows={dragons} rowHeaders page="1 из я хуй знает скольки" />
         </main>
         <footer>
-          <ul>
+          <ul className='FooterList'>
             <li className='OperationItem'>
               <ul className='NeededOperations'>
                 <li>

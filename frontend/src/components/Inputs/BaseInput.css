@@ -26,5 +26,5 @@
 .Select
 {
     height: 30px;
-    width: 320px;
+    width: inherit;
 }

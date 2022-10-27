@@ -5,6 +5,8 @@ import HeaderButton from './components/Buttons/HeaderButton';
 import AddDragon from './views/AddDragon/AddDragon';
 import ReturnCount from './views/ReturnCount/ReturnCount';
 import HomePage from './views/HomePage/HomePage';
+import Test from './views/Test';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -53,6 +55,7 @@ function App() {
             <Route path='charactermore' element={<ReturnCount type="характер которых больше" param="character" />} />
             <Route path='typeless' element={<ReturnCount type="тип которых меньше" param="type" />} />
             <Route path='namestarts' element={<ReturnArray namesubstring="Мераксес" />} />
+            <Route path='test' element={<Test />} />
           </Routes>
         </Router>
       </div>
