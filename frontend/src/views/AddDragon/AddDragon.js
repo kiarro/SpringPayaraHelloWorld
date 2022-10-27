@@ -3,6 +3,7 @@ import './AddDragon.css';
 import HeaderButton from './../../components/Buttons/HeaderButton';
 import BaseInput from './../../components/Inputs/BaseInput';
 import Select from './../../components/Inputs/Select';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 import { useNavigate } from 'react-router-dom';
 import {
@@ -12,6 +13,8 @@ import {
 
 function AddDragon() {
   const history = useNavigate();
+  
+  const [error, setError] = useState(null);
 
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -47,10 +50,17 @@ function AddDragon() {
         headers: {
           'Content-Type': 'application/json',
         },
+      })
+      .then(res => {
+        if (res.ok) {
+          history("/");
+        } else {
+          setError(res.status);
+        }
       });
 
-      history("/");
     } catch (err) {
+      setError("Произошла ошибка при формировании запроса. Введены неверные данные.");
     } finally {
     }
   }
@@ -85,7 +95,8 @@ function AddDragon() {
         <div className='InputConteiner'>
           <BaseInput name="Количество сокровищ" value={numberOfTreasures} onChange={(e) => setNumberOfTreasures(e.target.value)} />
         </div>
-        <button className="HeaderButton" onClick={sendClick} >Добавить дракона</button>
+        <ErrorMessage text={error} />
+        <button className="AddButton" onClick={sendClick} >Добавить дракона</button>
       </div>
     </main>
   );

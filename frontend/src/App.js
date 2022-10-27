@@ -26,6 +26,17 @@ function BackButton() {
   );
 }
 
+function AddDragonButton() {
+  let location = useLocation();
+  // console.log(location);
+
+  return (
+    <nav className='ButtonContainer' hidden={location.pathname=="/adddragon"}>
+      <Link to="adddragon"><HeaderButton name="Добавить дракона" /></Link>
+    </nav>
+  );
+}
+
 function App() {
   return (
     <div className="App">
@@ -34,9 +45,7 @@ function App() {
           <header className="App-header">
             <BackButton/>
             <div className='App-logo'><Link to="/"><img src={dragon} className="App-logo" alt="logo" /></Link></div>
-            <nav className='ButtonContainer'>
-              <Link to="adddragon"><HeaderButton name="Добавить дракона" /></Link>
-            </nav>
+            <AddDragonButton/>
           </header>
           <Routes>
             <Route path='' element={<HomePage />} />

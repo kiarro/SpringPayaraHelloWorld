@@ -7,6 +7,8 @@ import cellEditFactory from 'react-bootstrap-table2-editor';
 import filterFactory, { textFilter, selectFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter';
 import { Type } from 'react-bootstrap-table2-editor';
 
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+
 const defaultSorted = [{
   dataField: 'id',
   order: 'desc'
@@ -20,7 +22,7 @@ const selectRow = {
 
 const customTotal = (from, to, size) => (
   <span className="react-bootstrap-table-pagination-total">
-    Страница { from } размером { to }, всего { size } драконов
+    Страница {from} размером {to}, всего {size} драконов
   </span>
 );
 
@@ -151,38 +153,56 @@ const headers = [{
 ];
 
 class DragonBase extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      error: null
+    };
+  }
+
   render() {
+
     const options = {
-    sizePerPage: 5,
-    nextPageText: '>',
-    prePageText: '<',
-    hideSizePerPage: true,
-    hidePageListOnlyOnePage: true,
-    //showTotal: true,
-    paginationTotalRenderer: customTotal
+      sizePerPage: 5,
+      nextPageText: '>',
+      prePageText: '<',
+      hideSizePerPage: true,
+      hidePageListOnlyOnePage: true,
+      //showTotal: true,
+      paginationTotalRenderer: customTotal
     }
+
     return (
-      <BootstrapTable 
-      keyField='id' data={ this.props.rows } columns={ headers }
-      pagination={ paginationFactory(options) }
-      defaultSorted={ defaultSorted }
-      filter={ filterFactory() }
-      cellEdit={ cellEditFactory({ 
-        mode: 'click',
-        afterSaveCell: (oldv, newv, row, col) => {
-          console.log(row);
-          // console.log(col);
-          fetch("/dragonscaves/"+row.id, {
-            method: 'PUT',
-            body: JSON.stringify(row),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-        }
-      }) }
-      selectRow={ selectRow }
-      />
+      <div>
+        <BootstrapTable
+          keyField='id' data={this.props.rows} columns={headers}
+          pagination={paginationFactory(options)}
+          defaultSorted={defaultSorted}
+          filter={filterFactory()}
+          cellEdit={cellEditFactory({
+            mode: 'click',
+            afterSaveCell: (oldv, newv, row, col) => {
+              console.log(row);
+              // console.log(col);
+              fetch("/dragonscaves/" + row.id, {
+                method: 'PUT',
+                body: JSON.stringify(row),
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              }).then(res => {
+                console.log(res.status);
+                if (!res.ok){
+                  this.state.error = res.status;
+                }
+              });
+            }
+          })}
+          selectRow={selectRow}
+        />
+        <ErrorMessage text={this.state.error} />
+      </div>
     );
   }
 }
