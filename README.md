@@ -43,11 +43,9 @@ then copy your project to frontend
 
 build using
 
-`npm run-script build`
+`npm run-script compile`
 
 from frontend folder
-
-then move files from 'build' to 'src\main\webapp\WEB-INF\views'
 
 
 ## launch at web
@@ -75,6 +73,9 @@ docker pull kiarro/dragon:1710
 
 docker-compose -p <name> up 
 docker-compose -p dragons up 
+
+
+docker container ls
 ```
 
 ### go inside container
@@ -96,3 +97,15 @@ create-jdbc-connection-pool --datasourceclassname org.postgresql.ds.PGSimpleData
 create-jdbc-resource --connectionpoolid postgresql_pool jdbc/postgrespool
 
 ping-connection-pool postgresql_pool
+
+
+### deploy
+
+asadmin deploy --contextroot /api dragons.war
+asadmin deploy --contextroot / dragon-front.war
+
+### server url
+
+```
+http://labvm-42-08.itmo-lab.cosm-lab.science:8080
+```

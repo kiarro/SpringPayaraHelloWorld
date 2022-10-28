@@ -37,7 +37,7 @@ public class DragonAndCaveController {
 
     @GetMapping
     public Collection<Dragon> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
-            @RequestParam(name = "limit", defaultValue = "10") Long limit,
+            @RequestParam(name = "limit", defaultValue = "-1") Long limit,
             @RequestParam(name = "sort", required = false) String[] sortvalues,
             DragonFilter filter) {
 
@@ -47,6 +47,9 @@ public class DragonAndCaveController {
         }
         if (!(sortvalues == null)) {
             dragons = dragonCaveService.getSorted(dragons, sortvalues);
+        }
+        if (limit == -1) {
+            limit = (long)dragons.size();
         }
         return dragonCaveService.getPage(dragons, offset, limit);
     }

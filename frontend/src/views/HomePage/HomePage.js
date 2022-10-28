@@ -80,7 +80,7 @@ function HomePage() {
   const [typeless, setTypeless] = useState("WATER");
 
   useEffect(() => {
-    fetch("/api/dragonscaves?limit=1000", {
+    fetch("/api/dragonscaves", {
       headers: {
         'Accept': 'application/json',
       }

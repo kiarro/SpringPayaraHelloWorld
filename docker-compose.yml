@@ -17,5 +17,5 @@ services:
       - "4848:4848"
       - "8181:8181"
       - "8000:8000"
-    # volumes:
-    #   - ~/my-payara-project/deployments:/opt/payara/deployments
+    volumes:
+      - ./depts/deployments:/opt/dept
