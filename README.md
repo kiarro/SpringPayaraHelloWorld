@@ -76,6 +76,8 @@ docker-compose -p dragons up
 
 
 docker container ls
+
+docker stop
 ```
 
 ### go inside container
@@ -103,6 +105,11 @@ ping-connection-pool postgresql_pool
 
 asadmin deploy --contextroot /api dragons.war
 asadmin deploy --contextroot / dragon-front.war
+
+asadmin list-applications
+
+asadmin undeploy dragons
+asadmin undeploy dragon-front
 
 ### server url
 

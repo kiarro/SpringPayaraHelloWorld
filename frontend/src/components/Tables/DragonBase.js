@@ -12,7 +12,7 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 const defaultSorted = [{
   dataField: 'id',
-  order: 'desc'
+  order: 'asc'
 }];
 
 const selectTypes = {
@@ -214,7 +214,7 @@ class DragonBase extends React.Component {
       }, {
         text: '10', value: 10
       }, {
-        text: 'All', value: this.state.rows.length
+        text: '50', value: 50
       }]
     }
 
