@@ -114,49 +114,264 @@ public class DragonCaveServiceImpl implements DragonCaveService {
     @Override
     public Collection<Dragon> getFiltered(Collection<Dragon> collection, DragonFilter filter) {
         Predicate<Dragon> predicate = item -> true;
-        
+
         Optional<DragonFilter> oFilter = Optional.ofNullable(filter);
         if (!oFilter.isPresent()) {
             return collection;
         }
 
-        if (oFilter.map(DragonFilter::getAge).isPresent()){
-            predicate.and(item -> item.getAge().equals(oFilter.map(DragonFilter::getAge).get()));
+        if (oFilter.map(DragonFilter::getAge).isPresent() && oFilter.map(DragonFilter::getOp_age).isPresent()) {
+            switch (filter.getOp_age()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getAge().compareTo(filter.getAge()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getCharacter).isPresent()){
-            predicate.and(item -> item.getCharacter().equals(oFilter.map(DragonFilter::getCharacter).get()));
+        if (oFilter.map(DragonFilter::getCharacter).isPresent()
+                && oFilter.map(DragonFilter::getOp_character).isPresent()) {
+            switch (filter.getOp_character()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCharacter().compareTo(filter.getCharacter()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getCreationDate).isPresent()){
-            predicate.and(item -> item.getCreationDate().equals(oFilter.map(DragonFilter::getCreationDate).get()));
+        if (oFilter.map(DragonFilter::getCreationDate).isPresent()
+                && oFilter.map(DragonFilter::getOp_creationDate).isPresent()) {
+            switch (filter.getOp_creationDate()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCreationDate().compareTo(filter.getCreationDate()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getId).isPresent()){
-            predicate.and(item -> item.getId().equals(oFilter.map(DragonFilter::getId).get()));
+        if (oFilter.map(DragonFilter::getId).isPresent()
+                && oFilter.map(DragonFilter::getOp_id).isPresent()) {
+            switch (filter.getOp_id()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getId().compareTo(filter.getId()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getName).isPresent()){
-            predicate.and(item -> item.getName().equals(oFilter.map(DragonFilter::getName).get()));
+        if (oFilter.map(DragonFilter::getName).isPresent()
+                && oFilter.map(DragonFilter::getOp_name).isPresent()) {
+            switch (filter.getOp_name()) {
+                case eq:
+                    // predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) == 0);
+                    predicate = predicate.and(item -> item.getName().contains(filter.getName()));
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getName().compareTo(filter.getName()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getType).isPresent()){
-            predicate.and(item -> item.getType().equals(oFilter.map(DragonFilter::getType).get()));
+        if (oFilter.map(DragonFilter::getType).isPresent()
+                && oFilter.map(DragonFilter::getOp_type).isPresent()) {
+            switch (filter.getOp_type()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getType().compareTo(filter.getType()) != 0);
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getWeight).isPresent()){
-            predicate.and(item -> item.getWeight().equals(oFilter.map(DragonFilter::getWeight).get()));
+        if (oFilter.map(DragonFilter::getWeight).isPresent()
+                && oFilter.map(DragonFilter::getOp_weight).isPresent()) {
+            switch (filter.getOp_weight()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) == 0);
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) >= 0);
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) > 0);
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) <= 0);
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) < 0);
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getWeight().compareTo(filter.getWeight()) != 0);
+                    break;
+            }
         }
-        // coords
-        if (oFilter.map(DragonFilter::getCoordinateX).isPresent()){
-            predicate.and(item -> item.getCoordinates().getX() == oFilter.map(DragonFilter::getCoordinateX).get());
+        if (oFilter.map(DragonFilter::getCoordinateX).isPresent()
+                && oFilter.map(DragonFilter::getOp_coordinateX).isPresent()) {
+            switch (filter.getOp_coordinateX()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() == filter.getCoordinateX());
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() >= filter.getCoordinateX());
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() > filter.getCoordinateX());
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() <= filter.getCoordinateX());
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() < filter.getCoordinateX());
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCoordinates().getX() != filter.getCoordinateX());
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getCoordinateY).isPresent()){
-            predicate.and(item -> item.getCoordinates().getY() == oFilter.map(DragonFilter::getCoordinateY).get());
+        if (oFilter.map(DragonFilter::getCoordinateY).isPresent()
+                && oFilter.map(DragonFilter::getOp_coordinateY).isPresent()) {
+            switch (filter.getOp_coordinateY()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() == filter.getCoordinateY());
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() >= filter.getCoordinateY());
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() > filter.getCoordinateY());
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() <= filter.getCoordinateY());
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() < filter.getCoordinateY());
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCoordinates().getY() != filter.getCoordinateY());
+                    break;
+            }
         }
-        // cave
-        if (oFilter.map(DragonFilter::getCaveDepth).isPresent()){
-            predicate.and(item -> item.getCave().getDepth() == oFilter.map(DragonFilter::getCaveDepth).get());
+        if (oFilter.map(DragonFilter::getCaveDepth).isPresent()
+                && oFilter.map(DragonFilter::getOp_caveDepth).isPresent()) {
+            switch (filter.getOp_caveDepth()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCave().getDepth() == filter.getCaveDepth());
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCave().getDepth() >= filter.getCaveDepth());
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCave().getDepth() > filter.getCaveDepth());
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCave().getDepth() <= filter.getCaveDepth());
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCave().getDepth() < filter.getCaveDepth());
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCave().getDepth() != filter.getCaveDepth());
+                    break;
+            }
         }
-        if (oFilter.map(DragonFilter::getCaveNumberOfTreasures).isPresent()){
-            predicate.and(item -> item.getCave().getNumberOfTreasures() == oFilter.map(DragonFilter::getCaveNumberOfTreasures).get());
-        }
-        if (oFilter.map(DragonFilter::getCaveId).isPresent()){
-            predicate.and(item -> item.getCave().getCaveId() == oFilter.map(DragonFilter::getCaveId).get());
+        if (oFilter.map(DragonFilter::getCaveNumberOfTreasures).isPresent()
+                && oFilter.map(DragonFilter::getOp_caveNumberOfTreasures).isPresent()) {
+            switch (filter.getOp_caveNumberOfTreasures()) {
+                case eq:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() == filter.getCaveNumberOfTreasures());
+                    break;
+                case ge:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() >= filter.getCaveNumberOfTreasures());
+                    break;
+                case gt:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() > filter.getCaveNumberOfTreasures());
+                    break;
+                case le:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() <= filter.getCaveNumberOfTreasures());
+                    break;
+                case lt:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() < filter.getCaveNumberOfTreasures());
+                    break;
+                case ne:
+                    predicate = predicate.and(item -> item.getCave().getNumberOfTreasures() != filter.getCaveNumberOfTreasures());
+                    break;
+            }
         }
 
         collection = collection.stream().filter(predicate).collect(Collectors.toList());
@@ -165,12 +380,12 @@ public class DragonCaveServiceImpl implements DragonCaveService {
 
     @Override
     public long countTypeLessThan(Collection<Dragon> collection, DragonType type) {
-        return collection.stream().filter(item -> item.getType().compareTo(type)<0).count();
+        return collection.stream().filter(item -> item.getType().compareTo(type) < 0).count();
     }
 
     @Override
     public long countCharacterMoreThan(Collection<Dragon> collection, DragonCharacter character) {
-        return collection.stream().filter(item -> item.getCharacter().compareTo(character)>0).count();
+        return collection.stream().filter(item -> item.getCharacter().compareTo(character) > 0).count();
     }
 
     @Override
@@ -191,51 +406,56 @@ public class DragonCaveServiceImpl implements DragonCaveService {
             String field = val.substring(1).toLowerCase();
             switch (field) {
                 case "id": {
-                    comparator = comparator.thenComparing(Dragon::getId, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getId, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "name": {
-                    comparator = comparator.thenComparing(Dragon::getName, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getName, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
-                case "x": {
-                    comparator = comparator.thenComparing(Dragon::getCoordinates, (o1, o2) -> (int)(o1.getX()-o2.getX())*sign);
+                case "coordinatex": {
+                    comparator = comparator.thenComparing(Dragon::getCoordinates,
+                            (o1, o2) -> Float.compare(o1.getX(), o2.getX()) * sign);
                     break;
                 }
-                case "y": {
-                    comparator = comparator.thenComparing(Dragon::getCoordinates, (o1, o2) -> (int)(o1.getY()-o2.getY())*sign);
+                case "coordinatey": {
+                    comparator = comparator.thenComparing(Dragon::getCoordinates,
+                            (o1, o2) -> Float.compare(o1.getY(), o2.getY()) * sign);
                     break;
                 }
                 case "creationdate": {
-                    comparator = comparator.thenComparing(Dragon::getCreationDate, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getCreationDate, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "age": {
-                    comparator = comparator.thenComparing(Dragon::getAge, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getAge, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "weight": {
-                    comparator = comparator.thenComparing(Dragon::getWeight, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getWeight, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "type": {
-                    comparator = comparator.thenComparing(Dragon::getType, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getType, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "character": {
-                    comparator = comparator.thenComparing(Dragon::getCharacter, (o1, o2) -> o1.compareTo(o2)*sign);
+                    comparator = comparator.thenComparing(Dragon::getCharacter, (o1, o2) -> o1.compareTo(o2) * sign);
                     break;
                 }
                 case "cavedepth": {
-                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getDepth()-o2.getDepth())*sign);
+                    comparator = comparator.thenComparing(Dragon::getCave,
+                            (o1, o2) -> Float.compare(o1.getDepth(), o2.getDepth()) * sign);
                     break;
                 }
                 case "cavenumberoftreasures": {
-                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getNumberOfTreasures()-o2.getNumberOfTreasures())*sign);
+                    comparator = comparator.thenComparing(Dragon::getCave,
+                            (o1, o2) -> Double.compare(o1.getNumberOfTreasures(), o2.getNumberOfTreasures()) * sign);
                     break;
                 }
                 case "caveid": {
-                    comparator = comparator.thenComparing(Dragon::getCave, (o1, o2) -> (int)(o1.getCaveId()-o2.getCaveId())*sign);
+                    comparator = comparator.thenComparing(Dragon::getCave,
+                            (o1, o2) -> (int) (o1.getCaveId() - o2.getCaveId()) * sign);
                     break;
                 }
             }

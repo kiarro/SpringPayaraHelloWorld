@@ -19,6 +19,55 @@ public class DragonFilter {
     public Double caveNumberOfTreasures = null;
     public Long caveId = null;
     
+    public Operation op_id = null;
+    public Operation getOp_id() {
+        return op_id;
+    }
+    public Operation op_name = null;
+    public Operation getOp_name() {
+        return op_name;
+    }
+    public Operation op_coordinateX = null;
+    public Operation getOp_coordinateX() {
+        return op_coordinateX;
+    }
+    public Operation op_coordinateY = null;
+    public Operation getOp_coordinateY() {
+        return op_coordinateY;
+    }
+    public Operation op_creationDate = null;
+    public Operation getOp_creationDate() {
+        return op_creationDate;
+    }
+    public Operation op_age = null;
+    public Operation getOp_age() {
+        return op_age;
+    }
+    public Operation op_weight = null;
+    public Operation getOp_weight() {
+        return op_weight;
+    }
+    public Operation op_type = null;
+    public Operation getOp_type() {
+        return op_type;
+    }
+    public Operation op_character = null;
+    public Operation getOp_character() {
+        return op_character;
+    }
+    public Operation op_caveDepth = null;
+    public Operation getOp_caveDepth() {
+        return op_caveDepth;
+    }
+    public Operation op_caveNumberOfTreasures = null;
+    public Operation getOp_caveNumberOfTreasures() {
+        return op_caveNumberOfTreasures;
+    }
+    public Operation op_caveId = null;
+    
+    public Operation getOp_caveId() {
+        return op_caveId;
+    }
     public Long getCaveId() {
         return caveId;
     }
@@ -91,4 +140,41 @@ public class DragonFilter {
     public void setCaveNumberOfTreasures(Double caveNumberOfTreasures) {
         this.caveNumberOfTreasures = caveNumberOfTreasures;
     }
+    public void setOp_id(Operation op_id) {
+        this.op_id = op_id;
+    }
+    public void setOp_name(Operation op_name) {
+        this.op_name = op_name;
+    }
+    public void setOp_coordinateX(Operation op_coordinateX) {
+        this.op_coordinateX = op_coordinateX;
+    }
+    public void setOp_coordinateY(Operation op_coordinateY) {
+        this.op_coordinateY = op_coordinateY;
+    }
+    public void setOp_creationDate(Operation op_creationDate) {
+        this.op_creationDate = op_creationDate;
+    }
+    public void setOp_age(Operation op_age) {
+        this.op_age = op_age;
+    }
+    public void setOp_weight(Operation op_weight) {
+        this.op_weight = op_weight;
+    }
+    public void setOp_type(Operation op_type) {
+        this.op_type = op_type;
+    }
+    public void setOp_character(Operation op_character) {
+        this.op_character = op_character;
+    }
+    public void setOp_caveDepth(Operation op_caveDepth) {
+        this.op_caveDepth = op_caveDepth;
+    }
+    public void setOp_caveNumberOfTreasures(Operation op_caveNumberOfTreasures) {
+        this.op_caveNumberOfTreasures = op_caveNumberOfTreasures;
+    }
+    public void setOp_caveId(Operation op_caveId) {
+        this.op_caveId = op_caveId;
+    }
 }
+
