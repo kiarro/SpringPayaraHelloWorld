@@ -5,7 +5,9 @@ import HeaderButton from './components/Buttons/HeaderButton';
 import AddDragon from './views/AddDragon/AddDragon';
 import ReturnCount from './views/ReturnCount/ReturnCount';
 import HomePage from './views/HomePage/HomePage';
+import DragonTable_back from './views/DragonTable_back/DragonTable_back';
 import Test from './views/Test';
+import DragonBase_back from './components/Tables/DragonBase_back';
 
 import {
   BrowserRouter as Router,
@@ -50,11 +52,12 @@ function App() {
             <AddDragonButton/>
           </header>
           <Routes>
-            <Route path='' element={<HomePage />} />
+            {/* <Route path='' element={<HomePage />} /> */}
             <Route path='/adddragon' element={<AddDragon />} />
             <Route path='/charactermore' element={<ReturnCount type="характер которых больше" param="character" />} />
             <Route path='/typeless' element={<ReturnCount type="тип которых меньше" param="type" />} />
             <Route path='/namestarts' element={<ReturnArray namesubstring="Мераксес" />} />
+            <Route path='' element={<DragonTable_back />} />
             <Route path='/test' element={<Test />} />
           </Routes>
         </Router>
