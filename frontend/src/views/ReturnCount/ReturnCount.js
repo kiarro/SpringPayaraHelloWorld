@@ -18,7 +18,7 @@ function ReturnCount(props) {
   param["character"] = searchParams.get("character");
 
   useEffect(() => {
-    fetch("/api/dragonscaves" + location.pathname + "?" + props.param + "=" + param[props.param], {
+    fetch("/dragonscaves" + location.pathname + "?" + props.param + "=" + param[props.param], {
       headers: {
         'Accept': 'application/json',
       }

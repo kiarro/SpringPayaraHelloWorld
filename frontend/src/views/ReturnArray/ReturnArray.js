@@ -119,7 +119,7 @@ function ReturnArray(props)
   const [dragons, setDragons] = useState([]);
 
   useEffect(() => {
-    fetch("/api/dragonscaves/namestarts?name="+name, {
+    fetch("/dragonscaves/namestarts?name="+name, {
       headers: {
         'Accept': 'application/json',
       }

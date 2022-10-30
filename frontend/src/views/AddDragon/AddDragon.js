@@ -44,7 +44,7 @@ function AddDragon() {
         }
       };
 
-      fetch("/api/dragonscaves", {
+      fetch("/dragonscaves", {
         method: 'POST',
         body: JSON.stringify(body),
         headers: {
