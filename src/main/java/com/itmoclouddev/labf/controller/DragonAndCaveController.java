@@ -35,6 +35,22 @@ public class DragonAndCaveController {
         dragonCaveService = new DragonCaveServiceImpl();
     }
 
+    @GetMapping("/count")
+    public Object getCount(DragonFilter filter) {
+
+        Collection<Dragon> dragons = dragonCaveService.getAll();
+
+        if (!(filter == null)) {
+            dragons = dragonCaveService.getFiltered(dragons, filter);
+        }
+
+        final long val = (long)dragons.size();
+
+        return new Object() {
+            public final long value = val;
+        };
+    }
+
     @GetMapping
     public Collection<Dragon> getAll(@RequestParam(name = "offset", defaultValue = "0") Long offset,
             @RequestParam(name = "limit", defaultValue = "-1") Long limit,

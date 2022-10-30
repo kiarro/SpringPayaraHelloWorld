@@ -17,6 +17,15 @@ const param_map = {
   "cave.numberOfTreasures": "caveNumberOfTreasures",
 }
 
+function edit_row(row, key, value) {
+  if (key in param_map) {
+    let keys = key.split('.');
+    row[keys[0]][keys[1]] = value;
+  } else {
+    row[key] = value;
+  }
+}
+
 const operation_map = {
   "=": "eq",
   "!=": "ne",
@@ -198,8 +207,8 @@ class DragonBase_back extends React.Component {
   }
 
   getData = (offset, limit, sortField, sortOrder, filters) => {
-    let url = "/dragonscaves?offset=" + offset + "&limit=" + limit;
-    let url_filter = "/dragonscaves/count?";
+    let url = "/api/dragonscaves?offset=" + offset + "&limit=" + limit;
+    let url_filter = "/api/dragonscaves/count?";
 
     if (filters) {
       for (let [key, value] of Object.entries(filters)) {
@@ -271,7 +280,7 @@ class DragonBase_back extends React.Component {
   }
 
   updateData = (row) => {
-    return fetch("/dragonscaves/" + row.id, {
+    return fetch("/api/dragonscaves/" + row.id, {
       method: 'PUT',
       body: JSON.stringify(row),
       headers: {
@@ -289,21 +298,30 @@ class DragonBase_back extends React.Component {
   handleTableChange = (type, { sortField, sortOrder, page, sizePerPage, filters, data, cellEdit }) => {
     if (type == "cellEdit") {
       let row = data.filter(x => x.id == cellEdit.rowId)[0];
-      row[cellEdit.dataField] = cellEdit.newValue;
-      this.updateData(row);
+      edit_row(row, cellEdit.dataField, cellEdit.newValue);
+      // row[cellEdit.dataField] = cellEdit.newValue;
+      this.updateData(row).then(() => {
+        const currentIndex = (page - 1) * sizePerPage;
+        this.setState(() => ({
+          page: page,
+          sizePerPage: sizePerPage,
+        }));
+        this.getData(currentIndex, sizePerPage, sortField, sortOrder, filters);
+      });
+    } else {
+      const currentIndex = (page - 1) * sizePerPage;
+      this.setState(() => ({
+        page: page,
+        sizePerPage: sizePerPage,
+      }));
+      this.getData(currentIndex, sizePerPage, sortField, sortOrder, filters);
     }
-    const currentIndex = (page - 1) * sizePerPage;
-    this.setState(() => ({
-      page: page,
-      sizePerPage: sizePerPage,
-    }));
-    this.getData(currentIndex, sizePerPage, sortField, sortOrder, filters);
   }
 
   onDelete = () => {
     // console.log(this.state.selected);
     let id = this.state.selected[0];
-    fetch("/dragonscaves/" + id, {
+    fetch("/api/dragonscaves/" + id, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

@@ -80,7 +80,7 @@ function HomePage() {
   const [typeless, setTypeless] = useState("WATER");
 
   useEffect(() => {
-    fetch("/dragonscaves", {
+    fetch("/api/dragonscaves", {
       headers: {
         'Accept': 'application/json',
       }

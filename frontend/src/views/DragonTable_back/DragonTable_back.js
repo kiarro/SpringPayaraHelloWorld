@@ -46,49 +46,13 @@ function DragonTable_back() {
   const [charactermore, setCharactermore] = useState("CUNNING");
   const [typeless, setTypeless] = useState("WATER");
 
-  // useEffect(() => {
-  //   fetch("/dragonscaves", {
-  //     headers: {
-  //       'Accept': 'application/json',
-  //     }
-  //   }).then(res => {
-  //     if (res.ok){
-  //       return res.json();
-  //     } else {
-  //       throw {message: 'HTTP status code '+res.status};
-  //     }
-  //   }).then(
-  //       (result) => {
-  //         setIsLoaded(true);
-  //         setDragons(result);
-  //       },
-  //       (error) => {
-  //         setIsLoaded(true);
-  //         setError(error);
-  //       }
-  //     )
-  // }, [])
-
-  // if (error) {
-  //   return (
-  //     <main>
-  //       <ErrorMessage text={error.message}></ErrorMessage>
-  //     </main>
-  //   );
-  // } else if (!isLoaded) {
-  //   return (
-  //     <main>
-  //       <div className='centered'>Loading...</div>
-  //     </main>
-  //   );
-  // } else {
-    return (
-      <div>
-        <main>
-          <DragonBase_back />
-        </main>
-      </div>
-    );
+  return (
+    <div>
+      <main>
+        <DragonBase_back />
+      </main>
+    </div>
+  );
   // }
 }
 
