@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Collection;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,11 +69,6 @@ public class DragonAndCaveController {
         return dragonCaveService.getPage(dragons, offset, limit);
     }
 
-    @GetMapping("/test")
-    public String getTestMessage() {
-        return "This is test message from dragons";
-    }
-
     @GetMapping("/{id}")
     public Dragon getDragon(@PathVariable("id") long id) {
         return dragonCaveService.get(id);
@@ -85,7 +79,6 @@ public class DragonAndCaveController {
         long id = dragonCaveService.add(dragon);
         if (id > 0) {
             URI uri = URI.create("/dragons/" + id);
-            // System.out.println(uri.toString());
             return ResponseEntity.accepted().location(uri).build();
         } else {
             return ResponseEntity.badRequest().build();
@@ -93,7 +86,6 @@ public class DragonAndCaveController {
     }
 
     @DeleteMapping("/{id}")
-    // @CrossOrigin(methods = RequestMethod.DELETE)
     public ResponseEntity<Dragon> deleteDragon(@PathVariable("id") long id) {
         Dragon deleted = dragonCaveService.delete(id);
         if (deleted != null) { // if there was dragon with such id
